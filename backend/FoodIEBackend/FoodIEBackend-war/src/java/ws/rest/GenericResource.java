@@ -20,6 +20,8 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import util.exception.InvalidLoginCredentialException;
+import util.security.JWTManager;
+
 
 @Path("GenericResource")
 public class GenericResource {
@@ -30,10 +32,13 @@ public class GenericResource {
     private final ActorUserControllerLocal actorUserControllerLocal;
     
     private Gson gson;
+    
+    private JWTManager jWTManager;
 
     public GenericResource() {
         actorUserControllerLocal = lookupActorUserControllerLocal();
         gson = new Gson();
+        jWTManager = new JWTManager();
     }
 
     @GET
@@ -65,11 +70,16 @@ public class GenericResource {
     @Path(value = "Login")
     public String Login(@FormParam("email") String email,
                         @FormParam("password") String password) {
-        String jsonStr = "";
+        String jsonStr;
         
         try {
+            // try to login
             ActorUser actorUser = actorUserControllerLocal.actorUserLogin(email, password);
+            // login succesfully
+            // parse the result in jwt
             jsonStr = gson.toJson(actorUser);
+            String response = jWTManager.createJWT("weihan1394@gmail.com", jsonStr, actorUser.getFirstName(), 1000000);
+            return response;
         } 
         catch (InvalidLoginCredentialException ex) {
             jsonStr = gson.toJson(ex.toString());
