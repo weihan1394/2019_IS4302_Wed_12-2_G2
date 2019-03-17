@@ -58,8 +58,8 @@ public class ActorUserController implements ActorUserControllerLocal {
     
     @Override
     public ActorUser retrieveActorUserByEmail(String email) throws UserActorNotFoundException {
-        Query query = em.createQuery("SELECT ac FROM ActorUser au WHERE au.email = :inEmail");
-        query.setParameter(":inEmail", email);
+        Query query = em.createQuery("SELECT au FROM ActorUser au WHERE au.email = :inEmail");
+        query.setParameter("inEmail", email);
         
         try {
             return (ActorUser)query.getSingleResult();

@@ -16,6 +16,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
+import javax.ws.rs.POST;
+import util.exception.InvalidLoginCredentialException;
 
 @Path("GenericResource")
 public class GenericResource {
@@ -45,20 +49,41 @@ public class GenericResource {
         return jsonStr;
     }
 
-    @GET
+//    @GET
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @Path(value = "RetrieveAllActorUser")
+//    public String RetrieveAllActorUser() {
+//        List<ActorUser> lsActorUser =  actorUserControllerLocal.retrieveAllActorUser();
+//        
+//        String jsonStr = gson.toJson(lsActorUser);
+//        return jsonStr;
+//    }
+    
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
-    @Path(value = "RetrieveAllActorUser")
-    public String RetrieveAllActorUser() {
-        List<ActorUser> lsActorUser =  actorUserControllerLocal.retrieveAllActorUser();
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Path(value = "Login")
+    public String Login(@FormParam("email") String email,
+                        @FormParam("password") String password) {
+        String jsonStr = "";
         
-        String jsonStr = gson.toJson(lsActorUser);
+        try {
+            ActorUser actorUser = actorUserControllerLocal.actorUserLogin(email, password);
+            jsonStr = gson.toJson(actorUser);
+        } 
+        catch (InvalidLoginCredentialException ex) {
+            jsonStr = gson.toJson(ex.toString());
+        }
+        
         return jsonStr;
     }
     
     private ActorUserControllerLocal lookupActorUserControllerLocal() {
         try {
-            javax.naming.Context context = new InitialContext();
-            return (ActorUserControllerLocal)context.lookup("java:global/FoodIEBackend/FoodIEBackend-ejb/ActorUserController!ejb.session.stateless.ActorUserControllerLocal");
+            javax.naming.Context c = new InitialContext();
+            // weihan: naming convention to inject ejb
+            // https://docs.oracle.com/javaee/6/tutorial/doc/gipjf.html
+            return (ActorUserControllerLocal)c.lookup("java:global/FoodIEBackend/FoodIEBackend-ejb/ActorUserController!ejb.session.stateless.ActorUserControllerLocal");
         }
         catch (NamingException namingException) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", namingException);
