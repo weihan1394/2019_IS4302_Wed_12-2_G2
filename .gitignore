@@ -7,3 +7,6 @@
 /backend/FoodIEBackend/FoodIEBackend-war/build/
 /backend/FoodIEBackend/FoodIEBackend-war/dist/
 /backend/FoodIEBackend/FoodIEBackend-ejb/dist/
+/backend/FoodIEBackend-war/nbproject/private/
+/backend/FoodIEBackend-war/dist/
+/backend/FoodIEBackend-war/build/
