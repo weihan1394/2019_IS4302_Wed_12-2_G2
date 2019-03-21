@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+body {
+  background-color: #f2f7fb;
+  margin: 0;
+  height: 100%;
+  font-family: Roboto, Verdana, Geneva, Tahoma, sans-serif;
+}
+
+@media screen and (max-width: 959px) {
+  .loginCard.ui-card-shadow {
+    box-shadow: none !important;
+  }
+}

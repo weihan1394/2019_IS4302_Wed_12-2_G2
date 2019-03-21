@@ -10,3 +10,48 @@
 /backend/FoodIEBackend-war/nbproject/private/
 /backend/FoodIEBackend-war/dist/
 /backend/FoodIEBackend-war/build/
+
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/foodie/dist
+/foodie/dist-server
+/foodie/tmp
+/foodie/out-tsc
+
+# dependencies
+/foodie/node_modules
+
+# IDEs and editors
+/foodie/.idea
+/foodie/.project
+/foodie/.classpath
+/foodie/.c9/
+/foodie/*.launch
+/foodie/.settings/
+/foodie/*.sublime-workspace
+
+# IDE - VSCode
+/foodie/.vscode/*
+/foodie/!.vscode/settings.json
+/foodie/!.vscode/tasks.json
+/foodie/!.vscode/launch.json
+/foodie/!.vscode/extensions.json
+
+# misc
+/foodie/.sass-cache
+/foodie/connect.lock
+/foodie/coverage
+/foodie/libpeerconnection.log
+/foodie/npm-debug.log
+/foodie/yarn-error.log
+/foodie/testem.log
+/foodie/typings
+
+# e2e
+/foodie/e2e/*.js
+/foodie/e2e/*.map
+
+# System Files
+/foodie/.DS_Store
+/foodie/Thumbs.db
