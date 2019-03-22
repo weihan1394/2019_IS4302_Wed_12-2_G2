@@ -10,6 +10,7 @@
 /backend/FoodIEBackend-war/nbproject/private/
 /backend/FoodIEBackend-war/dist/
 /backend/FoodIEBackend-war/build/
+/backend/FoodIEBackend/FoodIEBackend-ejb/setup/glassfish-resources.xml
 
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
@@ -55,3 +56,4 @@
 # System Files
 /foodie/.DS_Store
 /foodie/Thumbs.db
+
