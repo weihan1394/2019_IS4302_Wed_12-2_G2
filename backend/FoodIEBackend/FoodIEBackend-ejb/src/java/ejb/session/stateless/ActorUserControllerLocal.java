@@ -16,5 +16,5 @@ public interface ActorUserControllerLocal {
 
     public ActorUser retrieveActorUserByEmail(String email) throws UserActorNotFoundException;
 
-    public ActorUser actorUserLogin(String email, String password) throws InvalidLoginCredentialException;
+    public String actorUserLogin(String email, String password) throws InvalidLoginCredentialException;
 }

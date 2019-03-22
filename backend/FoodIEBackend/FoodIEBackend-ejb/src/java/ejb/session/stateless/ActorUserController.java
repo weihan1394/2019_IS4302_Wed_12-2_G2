@@ -1,5 +1,6 @@
 package ejb.session.stateless;
 
+import com.google.gson.Gson;
 import entity.ActorUser;
 import java.util.List;
 import java.util.Set;
@@ -18,6 +19,7 @@ import util.exception.InputDataValidationException;
 import util.exception.InvalidLoginCredentialException;
 import util.exception.UserActorNotFoundException;
 import util.security.CryptographicHelper;
+import util.security.JWTManager;
 
 @Stateless
 @Local(ActorUserControllerLocal.class)
@@ -30,9 +32,18 @@ public class ActorUserController implements ActorUserControllerLocal {
     private final ValidatorFactory validatorFactory;
     private final Validator validator;
 
+    private JWTManager jWTManager;
+    
+    private Gson gson;
+
+    
     public ActorUserController() {
         validatorFactory = Validation.buildDefaultValidatorFactory();
         validator = validatorFactory.getValidator();
+        
+        gson = new Gson();
+        
+        jWTManager = new JWTManager();
     }
 
     // Create new actoruser
@@ -69,13 +80,15 @@ public class ActorUserController implements ActorUserControllerLocal {
     }
     
     @Override
-    public ActorUser actorUserLogin(String email, String password) throws InvalidLoginCredentialException {
+    public String actorUserLogin(String email, String password) throws InvalidLoginCredentialException {
         try {
             ActorUser actorUser = retrieveActorUserByEmail(email);
             String passwordHash = CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(password + actorUser.getSalt()));
             
             if (actorUser.getPassword().equals(passwordHash)) {
-                return actorUser;
+                String jsonStr = gson.toJson(actorUser);
+                String response = jWTManager.createJWT("weihan1394@gmail.com", jsonStr, actorUser.getFirstName(), 1000000);
+                return response;
             } else {
                 throw new InvalidLoginCredentialException("Username does not exist or invalid password!");
             }

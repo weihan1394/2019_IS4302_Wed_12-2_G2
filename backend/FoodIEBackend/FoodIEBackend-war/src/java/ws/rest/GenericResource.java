@@ -10,7 +10,6 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import ejb.session.stateless.ActorUserControllerLocal;
-import entity.ActorUser;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +23,6 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.core.Response;
 import util.exception.InvalidLoginCredentialException;
-import util.security.JWTManager;
 
 
 @Path("GenericResource")
@@ -36,13 +34,10 @@ public class GenericResource {
     private final ActorUserControllerLocal actorUserControllerLocal;
     
     private Gson gson;
-    
-    private JWTManager jWTManager;
 
     public GenericResource() {
         actorUserControllerLocal = lookupActorUserControllerLocal();
         gson = new Gson();
-        jWTManager = new JWTManager();
     }
 
     @GET
@@ -76,18 +71,12 @@ public class GenericResource {
                         @FormParam("password") String password) {
         String jsonStr;
         try {
-            // try to login
-            ActorUser actorUser = actorUserControllerLocal.actorUserLogin(email, password);
-            actorUser.setPassword(null);
-            actorUser.setSalt(null);
+            // definitely login succesfully
+            System.out.println("email: " + email + "   password: " + password);
+            String response = actorUserControllerLocal.actorUserLogin(email, password);
+            System.out.println(response);
             
-            jsonStr = gson.toJson(actorUser);
-            
-            // login succesfully
-            // parse the result in jwt
-            String response = jWTManager.createJWT("weihan1394@gmail.com", jsonStr, actorUser.getFirstName(), 1000000);
-            
-            Map map = gson.fromJson(jsonStr, HashMap.class);
+            Map map = gson.fromJson(response, HashMap.class);
             map.put("token", response);
             
             jsonStr = gson.toJson(map, HashMap.class);
