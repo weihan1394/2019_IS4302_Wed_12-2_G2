@@ -1,6 +1,6 @@
 package ejb.session.stateless;
 
-import entity.ActorUser;
+import entity.ActorUserEntity;
 import java.util.List;
 import javax.ejb.Local;
 import util.exception.InputDataValidationException;
@@ -10,11 +10,11 @@ import util.exception.UserActorNotFoundException;
 @Local
 public interface ActorUserControllerLocal {
 
-    public ActorUser createNewActorUser(ActorUser newActorUser) throws InputDataValidationException;
+    public ActorUserEntity createNewActorUser(ActorUserEntity newActorUser) throws InputDataValidationException;
 
-    public List<ActorUser> retrieveAllActorUser();
+    public List<ActorUserEntity> retrieveAllActorUser();
 
-    public ActorUser retrieveActorUserByEmail(String email) throws UserActorNotFoundException;
+    public ActorUserEntity retrieveActorUserByEmail(String email) throws UserActorNotFoundException;
 
     public String actorUserLogin(String email, String password) throws InvalidLoginCredentialException;
 }

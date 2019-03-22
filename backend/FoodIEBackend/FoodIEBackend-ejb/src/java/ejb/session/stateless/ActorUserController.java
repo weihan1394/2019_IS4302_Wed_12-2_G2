@@ -1,7 +1,7 @@
 package ejb.session.stateless;
 
 import com.google.gson.Gson;
-import entity.ActorUser;
+import entity.ActorUserEntity;
 import java.util.List;
 import java.util.Set;
 import javax.ejb.Local;
@@ -48,8 +48,8 @@ public class ActorUserController implements ActorUserControllerLocal {
 
     // Create new actoruser
     @Override
-    public ActorUser createNewActorUser(ActorUser newActorUser) throws InputDataValidationException {
-        Set<ConstraintViolation<ActorUser>> constraintViolations = validator.validate(newActorUser);
+    public ActorUserEntity createNewActorUser(ActorUserEntity newActorUser) throws InputDataValidationException {
+        Set<ConstraintViolation<ActorUserEntity>> constraintViolations = validator.validate(newActorUser);
 
         if (constraintViolations.isEmpty()) {
             em.persist(newActorUser);
@@ -62,18 +62,18 @@ public class ActorUserController implements ActorUserControllerLocal {
     }
     
     @Override
-    public List<ActorUser> retrieveAllActorUser() {
-        Query query = em.createQuery("SELECT au FROM ActorUser au");
+    public List<ActorUserEntity> retrieveAllActorUser() {
+        Query query = em.createQuery("SELECT au FROM ActorUserEntity au");
         return query.getResultList();
     }
     
     @Override
-    public ActorUser retrieveActorUserByEmail(String email) throws UserActorNotFoundException {
-        Query query = em.createQuery("SELECT au FROM ActorUser au WHERE au.email = :inEmail");
+    public ActorUserEntity retrieveActorUserByEmail(String email) throws UserActorNotFoundException {
+        Query query = em.createQuery("SELECT au FROM ActorUserEntity au WHERE au.email = :inEmail");
         query.setParameter("inEmail", email);
         
         try {
-            return (ActorUser)query.getSingleResult();
+            return (ActorUserEntity)query.getSingleResult();
         } catch (NoResultException | NonUniqueResultException ex) {
             throw new UserActorNotFoundException("User: " + email + " does not exist!");
         }
@@ -82,12 +82,12 @@ public class ActorUserController implements ActorUserControllerLocal {
     @Override
     public String actorUserLogin(String email, String password) throws InvalidLoginCredentialException {
         try {
-            ActorUser actorUser = retrieveActorUserByEmail(email);
-            String passwordHash = CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(password + actorUser.getSalt()));
+            ActorUserEntity actorUserEntity = retrieveActorUserByEmail(email);
+            String passwordHash = CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(password + actorUserEntity.getSalt()));
             
-            if (actorUser.getPassword().equals(passwordHash)) {
-                String jsonStr = gson.toJson(actorUser);
-                String response = jWTManager.createJWT("weihan1394@gmail.com", jsonStr, actorUser.getFirstName(), 1000000);
+            if (actorUserEntity.getPassword().equals(passwordHash)) {
+                String jsonStr = gson.toJson(actorUserEntity);
+                String response = jWTManager.createJWT(actorUserEntity, null, "login");
                 return response;
             } else {
                 throw new InvalidLoginCredentialException("Username does not exist or invalid password!");
@@ -97,7 +97,7 @@ public class ActorUserController implements ActorUserControllerLocal {
         }
     }
 
-    private String prepareInputDataValidationErrorsMessage(Set<ConstraintViolation<ActorUser>> constraintViolations) {
+    private String prepareInputDataValidationErrorsMessage(Set<ConstraintViolation<ActorUserEntity>> constraintViolations) {
         String msg = "Input data validation error!:";
 
         for (ConstraintViolation constraintViolation : constraintViolations) {

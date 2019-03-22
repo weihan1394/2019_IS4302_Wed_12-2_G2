@@ -1,7 +1,7 @@
 package ejb.session.singleton;
 
 import ejb.session.stateless.ActorUserControllerLocal;
-import entity.ActorUser;
+import entity.ActorUserEntity;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -27,8 +27,8 @@ public class DataInitializationSessionBean {
     public void postConstruct() {
         System.out.println("checking if there is data...");
         try {
-            List<ActorUser> lsActorUser = actorUserControllerLocal.retrieveAllActorUser();
-            if ((lsActorUser == null) || (lsActorUser.isEmpty())) {
+            List<ActorUserEntity> lsActorUserEntitys = actorUserControllerLocal.retrieveAllActorUser();
+            if ((lsActorUserEntitys == null) || (lsActorUserEntitys.isEmpty())) {
                 initializeData();
             }
         } catch (Exception ex) {
@@ -38,10 +38,10 @@ public class DataInitializationSessionBean {
     
     private void initializeData() {
         try {
-            actorUserControllerLocal.createNewActorUser(new ActorUser("Lee", "Alice", "alice@test.com", "password", UserRole.FARMER));
-            actorUserControllerLocal.createNewActorUser(new ActorUser("Lee", "Bob", "bob@test.com", "password", UserRole.FARMER));
-            actorUserControllerLocal.createNewActorUser(new ActorUser("Lee", "Charlie", "charlie@test.com", "password", UserRole.FARMER));
-            actorUserControllerLocal.createNewActorUser(new ActorUser("Lee", "Delta", "delta@test.com", "password", UserRole.FARMER));
+            actorUserControllerLocal.createNewActorUser(new ActorUserEntity("Lee", "Alice", "alice@test.com", "password", UserRole.FARMER));
+            actorUserControllerLocal.createNewActorUser(new ActorUserEntity("Lee", "Bob", "bob@test.com", "password", UserRole.FARMER));
+            actorUserControllerLocal.createNewActorUser(new ActorUserEntity("Lee", "Charlie", "charlie@test.com", "password", UserRole.FARMER));
+            actorUserControllerLocal.createNewActorUser(new ActorUserEntity("Lee", "Delta", "delta@test.com", "password", UserRole.FARMER));
             
         } catch (InputDataValidationException ex) {
             System.err.println("********** DataInitializationSessionBean.initializeData(): " + ex.getMessage());
