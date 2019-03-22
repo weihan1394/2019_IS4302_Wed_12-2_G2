@@ -1,5 +1,3 @@
-import { AlertComponent } from './alert/alert.component';
-import { AlertService } from './_services/alert.service';
 import { AuthenticationService } from './_services/authentication.service';
 import { ErrorInterceptor } from './_helper/error.interceptor';
 import { JwtInterceptor } from './_helper/jwt.interceptor';
@@ -14,17 +12,18 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CardModule } from 'primeng/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material';
-import { MatButtonModule } from '@angular/material/button';4
-import {ButtonModule} from 'primeng/button';
+import { MatButtonModule } from '@angular/material/button'; 4
+import { ButtonModule } from 'primeng/button';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent,
-    AlertComponent
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -38,14 +37,15 @@ import {MatCardModule} from '@angular/material/card';
     MatButtonModule,
     ButtonModule,
     MatCardModule,
+    ToastModule,
     AppRoutingModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     AuthenticationService,
-    AlertService,
-    FormBuilder
+    FormBuilder,
+    MessageService
   ],
   bootstrap: [AppComponent]
 })

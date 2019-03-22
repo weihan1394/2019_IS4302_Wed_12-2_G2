@@ -8,10 +8,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import ejb.session.stateless.ActorUserControllerLocal;
 import entity.ActorUser;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
@@ -19,6 +22,7 @@ import javax.naming.NamingException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
+import javax.ws.rs.core.Response;
 import util.exception.InvalidLoginCredentialException;
 import util.security.JWTManager;
 
@@ -68,24 +72,34 @@ public class GenericResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path(value = "Login")
-    public String Login(@FormParam("email") String email,
+    public Response Login(@FormParam("email") String email,
                         @FormParam("password") String password) {
         String jsonStr;
-        
         try {
             // try to login
             ActorUser actorUser = actorUserControllerLocal.actorUserLogin(email, password);
+            actorUser.setPassword(null);
+            actorUser.setSalt(null);
+            
+            jsonStr = gson.toJson(actorUser);
+            
             // login succesfully
             // parse the result in jwt
-            jsonStr = gson.toJson(actorUser);
             String response = jWTManager.createJWT("weihan1394@gmail.com", jsonStr, actorUser.getFirstName(), 1000000);
-            return response;
+            
+            Map map = gson.fromJson(jsonStr, HashMap.class);
+            map.put("token", response);
+            
+            jsonStr = gson.toJson(map, HashMap.class);
+            return Response.status(Response.Status.OK).entity(jsonStr).build();
         } 
         catch (InvalidLoginCredentialException ex) {
-            jsonStr = gson.toJson(ex.toString());
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("message", ex.getMessage());
+            jsonStr = jsonObject.toString();
+            return Response.status(Response.Status.FORBIDDEN).entity(jsonStr).build();
         }
         
-        return jsonStr;
     }
     
     private ActorUserControllerLocal lookupActorUserControllerLocal() {

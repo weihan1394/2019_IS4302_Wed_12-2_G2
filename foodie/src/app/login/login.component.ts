@@ -1,8 +1,8 @@
-import { AlertService } from './../_services/alert.service';
 import { AuthenticationService } from './../_services/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
@@ -23,8 +23,8 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
-  constructor(private authenticationService: AuthenticationService, private router: Router,
-    private alertService: AlertService, private formBuilder: FormBuilder) { }
+  constructor(private authenticationService: AuthenticationService, private router: Router, 
+    private formBuilder: FormBuilder, private messageService: MessageService) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -37,14 +37,6 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  success(message: string) {
-    this.alertService.success(message);
-  }
-
-  error(message: string) {
-    this.alertService.error(message);
-  }
-
   getEmailErrorMessage() {
     return this.loginForm.get('email').hasError('required') ? 'Email is required' :
         this.loginForm.get('email').hasError('email') ? 'Not a valid email' :
@@ -54,6 +46,17 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     if (this.loginForm.valid) {
       let formValues = this.loginForm.value;
+      let email = formValues.email;
+      let password = formValues.password;
+      this.authenticationService.login(email, password).subscribe(
+        res => {
+          this.router.navigate(['/home']);
+        }, error => {
+          // this.error(error)
+          // error(error.error.message)
+          this.messageService.add({ severity: 'error', summary: 'Login Error', detail: error });
+        }
+      )
     } else {
       Object.keys(this.loginForm.controls).forEach(field => {
         const control = this.loginForm.get(field);

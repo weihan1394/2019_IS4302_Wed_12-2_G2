@@ -1,6 +1,6 @@
 {
 	"/api": {
-		"target": "http://localhost:8080/FoodIEBackend/GenericResource",
+		"target": "http://localhost:8080/FoodIEBackend-war/ws/GenericResource/",
 		"secure": false,
 		"changeOrigin": true,
 		"pathRewrite": {
