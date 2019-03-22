@@ -1,7 +1,7 @@
 import { AuthenticationService } from './../_services/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 
 @Component({
@@ -10,6 +10,8 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
+  returnUrl:string = "";
 
   validation_messages = {
     'email': [
@@ -24,9 +26,10 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
   constructor(private authenticationService: AuthenticationService, private router: Router, 
-    private formBuilder: FormBuilder, private messageService: MessageService) { }
+    private formBuilder: FormBuilder, private messageService: MessageService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.returnUrl =  this.route.snapshot.queryParamMap.get('returnUrl'); 
     this.loginForm = this.formBuilder.group({
       email: new FormControl('', {
         validators: [Validators.required, Validators.email]
@@ -50,7 +53,12 @@ export class LoginComponent implements OnInit {
       let password = formValues.password;
       this.authenticationService.login(email, password).subscribe(
         res => {
-          this.router.navigate(['/home']);
+          if(this.returnUrl) {
+            this.router.navigate([this.returnUrl]);
+          } else {
+            this.router.navigate(['/home']);
+          }
+          
         }, error => {
           // this.error(error)
           // error(error.error.message)

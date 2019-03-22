@@ -1,87 +1,86 @@
-
 .mat-form-field {
-    width: 100%;
-    padding: 0 30px;
-    font-weight: bold;
-    font-family: Poppins,sans-serif;
+  width: 100%;
+  padding: 0 30px;
+  font-weight: bold;
+  font-family: Poppins, sans-serif;
 }
 
-.cardHeader{
-    color: #516073;
-    text-align: center;
-    padding-top: 20px;
-    font-family: Poppins,sans-serif;
-    font-weight: normal;
+.cardHeader {
+  color: #516073;
+  text-align: center;
+  padding-top: 20px;
+  font-family: Poppins, sans-serif;
+  font-weight: normal;
 }
 
-.btnContainer{
-    padding: 0 35px;
+.btnContainer {
+  padding: 0 35px;
 }
 .logo-container {
-    padding-top: 30px;
-    width: 50%;
+  padding-top: 30px;
+  width: 50%;
 }
 .logo-img {
-    margin: auto 50%;
-    width: 100%;
-    height: auto;
+  margin: auto 50%;
+  width: 100%;
+  height: auto;
 }
 
 .footerContainer {
-    margin: 0 50%;
+  margin: 0 50%;
 }
 
 #submitBtn {
-    padding: 5px;
-    font-size: 1.2em;
-    font-family: Open Sans,sans-serif;
-    margin-top: 40px;
-    font-weight: 500;
-    width: 100%;
+  padding: 5px;
+  font-size: 1.2em;
+  font-family: Open Sans, sans-serif;
+  margin-top: 40px;
+  font-weight: 500;
+  width: 100%;
 }
 
 p-card {
-    width: 100%;
+  width: 100%;
 }
 
 .footerDiv {
-    text-align: center;
-    margin-bottom: 20px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .cardContainer {
-    width: 30%;
-    margin-top: 70px;
+  width: 30%;
+  margin-top: 70px;
 }
 
 .forgot-pass,
-	.mat-checkbox-label {
-		font-size: rem(14px);
-	}
+.mat-checkbox-label {
+  font-size: rem(14px);
+}
 
-	a:link:not(.btn),
-	a:visited:not(.btn) {
-		color: #007bff;
-	}
+a:link:not(.btn),
+a:visited:not(.btn) {
+  color: #007bff;
+}
 
-	a:active:not(.btn),
-	a:hover:not(.btn) {
-		color: darken(#007bff, 12%);
-	}
+a:active:not(.btn),
+a:hover:not(.btn) {
+  color: darken(#007bff, 12%);
+}
 
 @media screen and (max-width: 959px) {
-    .cardHeader{
-        color: #516073;
-        text-align: center;
-        padding-top: 20px;
-        font-family: Poppins,sans-serif;
-        font-size: 1.2em;
-        font-weight: bold;
-    }
-    
-    .cardContainer {
-        position: absolute;
-        margin: 0;
+  .cardHeader {
+    color: #516073;
+    text-align: center;
+    padding-top: 20px;
+    font-family: Poppins, sans-serif;
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+
+  .cardContainer {
+    position: absolute;
+    margin: 0;
     width: 100%;
     height: 100%;
     bottom: 0;
@@ -90,28 +89,26 @@ p-card {
     right: 0;
     background: #fff;
     overflow-y: auto;
-        width: 100%;
-        margin-top: 0;
-        height: 100%;
-    }
+    width: 100%;
+    margin-top: 0;
+    height: 100%;
+  }
 
-    #submitBtn {
-        padding: 5px;
-        font-size: 1.2em;
-        font-family: Open Sans,sans-serif;
-        margin-top: 40px;
-        font-weight: 500;
-        width: 100%;
-        margin-bottom: 10px;
-    }
+  #submitBtn {
+    padding: 5px;
+    font-size: 1.2em;
+    font-family: Open Sans, sans-serif;
+    margin-top: 40px;
+    font-weight: 500;
+    width: 100%;
+    margin-bottom: 10px;
+  }
 
-    .footerDiv {
-        text-align: center;
-        margin-bottom: 100px;
-    }
-    
+  .footerDiv {
+    text-align: center;
+    margin-bottom: 100px;
+  }
 }
 
 // @media screen and (max-width: 599px) {
-    
 // }
