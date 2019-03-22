@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from "rxjs";
+import { default as decode } from 'jwt-decode'
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' })
@@ -25,13 +26,16 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
-  login(email: string, password: string) {
+  login(email: string, password: string): Observable<any> {
     let body = new URLSearchParams();
     body.set("email", email);
     body.set("password", password);
     return this.httpClient.post<any>(this.baseUrl + "Login", body.toString(), httpOptions).pipe(
-      map(user => {
-        if (user && user.token) {
+      map(rsp => {
+        const tokenPayLoad = decode(rsp);
+        let user:User = JSON.parse(tokenPayLoad.iss);
+        user.token = rsp;
+        if (user && tokenPayLoad) {
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
         }
@@ -43,12 +47,13 @@ export class AuthenticationService {
 
   logout() {
     // remove user from local storage to log user out
+    console.log("lougout")
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
   }
 
   private handleError(error: HttpErrorResponse) {
-    // console.log(error);
+    console.log(error);
     // if (error.error instanceof ErrorEvent) {
     //   console.error("An unknown error has occurred:", error.error.message);
     // } else {

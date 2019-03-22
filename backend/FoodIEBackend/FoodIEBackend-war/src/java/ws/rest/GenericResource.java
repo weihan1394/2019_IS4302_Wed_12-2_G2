@@ -87,10 +87,7 @@ public class GenericResource {
             // parse the result in jwt
             String response = jWTManager.createJWT("weihan1394@gmail.com", jsonStr, actorUser.getFirstName(), 1000000);
             
-            Map map = gson.fromJson(jsonStr, HashMap.class);
-            map.put("token", response);
-            
-            jsonStr = gson.toJson(map, HashMap.class);
+            jsonStr = gson.toJson(response);
             return Response.status(Response.Status.OK).entity(jsonStr).build();
         } 
         catch (InvalidLoginCredentialException ex) {
