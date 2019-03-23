@@ -10,11 +10,8 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import ejb.session.stateless.ActorUserControllerLocal;
-import entity.ActorUser;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
@@ -24,7 +21,6 @@ import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.core.Response;
 import util.exception.InvalidLoginCredentialException;
-import util.security.JWTManager;
 
 
 @Path("GenericResource")
@@ -35,14 +31,14 @@ public class GenericResource {
 
     private final ActorUserControllerLocal actorUserControllerLocal;
     
-    private Gson gson;
+    private final Gson gson;
     
-    private JWTManager jWTManager;
+    private static final Logger LOGGER = Logger.getLogger( GenericResource.class.getName() );
+
 
     public GenericResource() {
         actorUserControllerLocal = lookupActorUserControllerLocal();
         gson = new Gson();
-        jWTManager = new JWTManager();
     }
 
     @GET
@@ -57,46 +53,28 @@ public class GenericResource {
         String jsonStr = gson.toJson(lsName);
         return jsonStr;
     }
-
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @Path(value = "RetrieveAllActorUser")
-//    public String RetrieveAllActorUser() {
-//        List<ActorUser> lsActorUser =  actorUserControllerLocal.retrieveAllActorUser();
-//        
-//        String jsonStr = gson.toJson(lsActorUser);
-//        return jsonStr;
-//    }
     
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Path(value = "Login")
-    public Response Login(@FormParam("email") String email,
-                        @FormParam("password") String password) {
-        String jsonStr;
+    public Response Login(@FormParam("email") String email, @FormParam("password") String password) {
+        String jwtStr;
+        JsonObject jsonObject = new JsonObject();
         try {
-            // try to login
-            ActorUser actorUser = actorUserControllerLocal.actorUserLogin(email, password);
-            actorUser.setPassword(null);
-            actorUser.setSalt(null);
+            // definitely login succesfully
+            jwtStr = actorUserControllerLocal.actorUserLogin(email, password);
             
-            jsonStr = gson.toJson(actorUser);
+            jsonObject.addProperty("success", jwtStr);
+            LOGGER.log(Level.INFO, "successful login: {0}", jwtStr);
             
-            // login succesfully
-            // parse the result in jwt
-            String response = jWTManager.createJWT("weihan1394@gmail.com", jsonStr, actorUser.getFirstName(), 1000000);
-            
-            jsonStr = gson.toJson(response);
-            return Response.status(Response.Status.OK).entity(jsonStr).build();
+            return Response.status(Response.Status.OK).entity(jsonObject.toString()).build();
         } 
         catch (InvalidLoginCredentialException ex) {
-            JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("message", ex.getMessage());
-            jsonStr = jsonObject.toString();
-            return Response.status(Response.Status.FORBIDDEN).entity(jsonStr).build();
+            jwtStr = jsonObject.toString();
+            return Response.status(Response.Status.FORBIDDEN).entity(jwtStr).build();
         }
-        
     }
     
     private ActorUserControllerLocal lookupActorUserControllerLocal() {
@@ -107,8 +85,25 @@ public class GenericResource {
             return (ActorUserControllerLocal)c.lookup("java:global/FoodIEBackend/FoodIEBackend-ejb/ActorUserController!ejb.session.stateless.ActorUserControllerLocal");
         }
         catch (NamingException namingException) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "exception caught", namingException);
+            // Clean up the logger
+            LOGGER.log(Level.SEVERE, "exception caught", namingException);
             throw new RuntimeException(namingException);
         }
     }
 }
+
+
+
+
+
+
+// sample for get method
+//    @GET
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @Path(value = "RetrieveAllActorUser")
+//    public String RetrieveAllActorUser() {
+//        List<ActorUser> lsActorUser =  actorUserControllerLocal.retrieveAllActorUser();
+//        
+//        String jwtStr = gson.toJson(lsActorUser);
+//        return jwtStr;
+//    }

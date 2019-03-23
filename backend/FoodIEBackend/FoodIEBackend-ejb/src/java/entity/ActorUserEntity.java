@@ -15,7 +15,7 @@ import util.enumeration.UserRole;
 import util.security.CryptographicHelper;
 
 @Entity
-public class ActorUser implements Serializable {
+public class ActorUserEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,12 +44,12 @@ public class ActorUser implements Serializable {
     @NotNull
     private UserRole userRoleEnum;
     
-    public ActorUser() {
+    public ActorUserEntity() {
         // generate a salt
         this.salt = CryptographicHelper.getInstance().generateRandomString(32);
     }
 
-    public ActorUser(String firstName, String lastName, String email, String password, UserRole role) {
+    public ActorUserEntity(String firstName, String lastName, String email, String password, UserRole role) {
         this();
         
         this.firstName = firstName;
@@ -131,10 +131,10 @@ public class ActorUser implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ActorUser)) {
+        if (!(object instanceof ActorUserEntity)) {
             return false;
         }
-        ActorUser other = (ActorUser) object;
+        ActorUserEntity other = (ActorUserEntity) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
