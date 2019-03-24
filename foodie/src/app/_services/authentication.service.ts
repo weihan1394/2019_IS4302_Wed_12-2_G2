@@ -32,8 +32,8 @@ export class AuthenticationService {
     body.set("password", password);
     return this.httpClient.post<any>(this.baseUrl + "Login", body.toString(), httpOptions).pipe(
       map(rsp => {
-        const tokenPayLoad = decode(rsp);
-        let user:User = JSON.parse(tokenPayLoad.iss);
+        const tokenPayLoad = decode(rsp.success);
+        let user:User = tokenPayLoad.LoggedInUser;
         user.token = rsp;
         if (user && tokenPayLoad) {
           localStorage.setItem('currentUser', JSON.stringify(user));
@@ -47,7 +47,6 @@ export class AuthenticationService {
 
   logout() {
     // remove user from local storage to log user out
-    console.log("lougout")
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
   }

@@ -1,3 +1,4 @@
+import { FarmerModule } from './farmer/farmer.module';
 import { AuthenticationService } from './_services/authentication.service';
 import { ErrorInterceptor } from './_helper/error.interceptor';
 import { JwtInterceptor } from './_helper/jwt.interceptor';
@@ -11,19 +12,23 @@ import { HomeComponent } from './home/home.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CardModule } from 'primeng/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material';
+import { MatInputModule, MatNativeDateModule, MatIconModule } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button'; 4
 import { ButtonModule } from 'primeng/button';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { LayoutComponent } from './layout/layout.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { DataService } from './_services/data.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    LayoutComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +43,9 @@ import { ToastModule } from 'primeng/toast';
     ButtonModule,
     MatCardModule,
     ToastModule,
+    FarmerModule,
+    MatToolbarModule,
+    MatIconModule,
     AppRoutingModule
   ],
   providers: [
@@ -45,7 +53,8 @@ import { ToastModule } from 'primeng/toast';
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     AuthenticationService,
     FormBuilder,
-    MessageService
+    MessageService,
+    DataService
   ],
   bootstrap: [AppComponent]
 })
