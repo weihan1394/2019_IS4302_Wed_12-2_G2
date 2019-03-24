@@ -1,6 +1,7 @@
 var https = require('https');
 var fs = require('fs');
 var express = require('express');
+var proxy = require("express-http-proxy");
 
 var options = {
     key: fs.readFileSync( './certbot/localhost.key' ),
@@ -13,10 +14,13 @@ var app = express();
 var port = process.env.PORT || 8323;
 var server = https.createServer( options, app );
 
-app.use((req, res) => {
-    res.writeHead(200);
-    res.end("hello world\n");
-  });
+// app.use((req, res) => {
+//     res.writeHead(200);
+//     res.end("hello world\n");
+// });
+
+// reverse proxy (login)
+app.use("/foodie", proxy("http://localhost:8321/FoodIEBackend-war/ws/GenericResource"));
 
 server.listen( port, function () {
     console.log( 'Express server listening on port ' + server.address().port );
