@@ -1,17 +1,3 @@
-// var express = require('express');
-// var proxy = require('express-http-proxy');
-// var https = require('https')
-
-// let app = express();
-// let port = process.env.PORT || 8323;
-
-// app.use((req, res) => {
-//     res.writeHead(200);
-//     res.end("hello world\n");
-//   });
-
-// app.listen(port, () => console.log('started server.. localhost:8323/'));
-
 var https = require('https');
 var fs = require('fs');
 var express = require('express');
