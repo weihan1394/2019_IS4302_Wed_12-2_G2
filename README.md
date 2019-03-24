@@ -41,6 +41,7 @@ Backend
 ### 4. ExpressJS
 - Created certificate and key
 - Setup with proxy to connect to (3)
+- To run: node server.js 
 
 ### 5. Postman
 - [Join link](https://app.getpostman.com/join-team?invite_code=85282c65ba5140e7bce6967bf155a052&ws=8e64163d-e931-457e-a715-60c7cd28f1bd)
