@@ -2,15 +2,9 @@
 
 IS4302 project
 
-Team member: Hui Zhong, Yi Xuan, Wei
+Team member: Hui Zhong, Yi Xuan, Wei Han
 
 ## Installation
-
-Use the package manager [pip](https://pip.df.io/en/stable/) to install foobar.
-
-```bash
-pip install foobar
-```
 
 ## Schedule
 ~~~
@@ -20,12 +14,9 @@ pip install foobar
 - [✓] Setup angular front-end
 - [✓] JavaEE and Web Application
 - [✓] Setup express-JS
-
 ~~~
 
 ##  Special Note
-
-
 ### 1. Hyperledger
 -
 
