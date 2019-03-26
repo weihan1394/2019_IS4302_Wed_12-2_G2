@@ -1,4 +1,4 @@
-<p-table [columns]="cols" [value]="crops" [responsive]="true" (onRowSelect)="onRowSelect($event)" selectionMode="single"
+<p-table [columns]="cols" [value]="foods" [responsive]="true" (onRowSelect)="onRowSelect($event)" selectionMode="single"
   [paginator]="true" [rows]="15">
   <ng-template pTemplate="header" let-columns>
     <tr class="headerRow">
@@ -8,7 +8,7 @@
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
-    <tr [ngClass]="rowIndex % 2 == 0 ? 'evenRow' : null" [pSelectableRow]="rowData">
+    <tr [pSelectableRow]="rowData">
       <td *ngFor="let col of columns">
         <span class="ui-column-title">{{col.header}}</span>
         {{rowData[col.field]}}
@@ -17,7 +17,7 @@
   </ng-template>
   <ng-template pTemplate="summary" let-rowData>
     <div style="text-align:left">
-      <button type="button" pButton icon="pi pi-plus" label="Add" (click)="switchPage('farmer/createCrop')"></button>
+      <button type="button" pButton icon="pi pi-plus" label="Add"></button>
     </div>
   </ng-template>
 </p-table>

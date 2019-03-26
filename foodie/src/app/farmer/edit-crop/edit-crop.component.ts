@@ -68,10 +68,4 @@ export class EditCropComponent implements OnInit {
   onSubmit() {
 
   }
-
-  back() {
-    let route = this.router.url;
-    let routeSplit = route.split("/");
-    this.router.navigate(["/" + routeSplit[1]]);
-  }
 }

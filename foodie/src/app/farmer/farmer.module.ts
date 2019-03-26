@@ -1,4 +1,4 @@
-import { DataService } from './../_services/data.service';
+import { SharedModule } from './../_shared/shared.module';
 import { ButtonModule } from 'primeng/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -14,27 +14,18 @@ import { CommonModule } from '@angular/common';
 import { EditCropComponent } from './edit-crop/edit-crop.component';
 import { FarmerRoutingModule } from './farmer-routing.module';
 import { MatInputModule, MatNativeDateModule } from '@angular/material';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
+import { CreateCropComponent } from './create-crop/create-crop.component';
 
 @NgModule({
   declarations: [
-    FarmerComponent, 
-    EditCropComponent
+    FarmerComponent,
+    EditCropComponent,
+    CreateCropComponent
   ],
   imports: [
     CommonModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    TableModule,
-    MatFormFieldModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatInputModule,
-    CardModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ButtonModule,
-    MatSelectModule,
+    SharedModule.forRoot(),
     FarmerRoutingModule
   ],
   providers: [

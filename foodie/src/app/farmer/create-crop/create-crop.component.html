@@ -1,0 +1,85 @@
+<div class="p-grid p-justify-center loginDiv">
+  <div class="p-col-12 p-align-center cardContainer">
+    <p-card styleClass="ui-card-shadow loginCard">
+      <p-header>
+        <h1 class="cardHeader">Create Crop</h1>
+      </p-header>
+      <div class="p-grid">
+        <div class="p-col-12">
+          <form class="editForm" [formGroup]="createForm" (ngSubmit)="onSubmit()">
+            <div class="p-grid">
+              <div class="p-col-12">
+                <mat-form-field>
+                  <input matInput placeholder="Name" formControlName="name">
+                  <mat-error *ngIf="createForm.get('name').hasError('required')">
+                    Name is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="p-col-12">
+                <mat-form-field class="weightFormField">
+                  <input matInput placeholder="Weight" formControlName="weight">
+                  <mat-error *ngIf="createForm.get('weight').hasError('required')">
+                    Weight is required
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="unitFormField">
+                  <mat-select formControlName="unit" placeholder="unit">
+                    <mat-option *ngFor="let u of units" [value]="u.value">
+                      {{u.value}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="createForm.get('unit').hasError('required')">
+                    Unit is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="p-col-12">
+                <mat-form-field>
+                  <input matInput placeholder="Date" [matDatepicker]="myDatepicker" formControlName="date">
+                  <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+                  <mat-datepicker #myDatepicker></mat-datepicker>
+                  <mat-error *ngIf="createForm.get('date').hasError('required')">
+                    Date is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="p-col-12">
+                <mat-form-field class="timeFormField">
+                  <mat-select formControlName="hours" placeholder="Hours">
+                    <mat-option *ngFor="let h of hours" [value]="h">
+                      {{h}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="createForm.get('hours').hasError('required')">
+                    Hours is required
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="timeFormField">
+                  <mat-select formControlName="minutes" placeholder="Minutes">
+                    <mat-option *ngFor="let m of minutes" [value]="m">
+                      {{m}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="createForm.get('minutes').hasError('required')">
+                    Minutes is required
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="Producer ID" formControlName="producerId">
+                  <mat-error *ngIf="createForm.get('producerId').hasError('required')">
+                    Producer ID is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="p-col-12 p-justify-between btnContainer">
+                <button id="submitBtn" pButton type="submit" class="ui-button-info ui-button-raised"
+                  label="Create"></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </p-card>
+  </div>
+</div>

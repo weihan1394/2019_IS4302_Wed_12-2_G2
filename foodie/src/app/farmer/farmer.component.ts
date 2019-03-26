@@ -23,7 +23,8 @@ export class FarmerComponent implements OnInit {
       { field: 'Name', header: 'Name' },
       { field: 'Weight', header: 'Weight' },
       { field: 'Date', header: 'Date' },
-      { field: 'Time', header: 'Time' }
+      { field: 'Time', header: 'Time' },
+      { field: 'ProducerId', header: 'Producer Id' }
     ]
 
     this.crops = this.farmerService.retrieveCrops();
@@ -33,5 +34,9 @@ export class FarmerComponent implements OnInit {
     let selectData = event.data;
     console.log(selectData);
     this.router.navigate(['farmer/editCrop', selectData.ID])
+  }
+
+  switchPage(page) {
+    this.router.navigate([page]);
   }
 }

@@ -1,3 +1,6 @@
+import { ProducerModule } from './producer/producer.module';
+import { SharedModule } from './_shared/shared.module';
+import { RetailerModule } from './retailer/retailer.module';
 import { FarmerModule } from './farmer/farmer.module';
 import { AuthenticationService } from './_services/authentication.service';
 import { ErrorInterceptor } from './_helper/error.interceptor';
@@ -13,10 +16,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CardModule } from 'primeng/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule, MatNativeDateModule, MatIconModule } from '@angular/material';
-import { MatButtonModule } from '@angular/material/button'; 4
+import { MatButtonModule } from '@angular/material/button';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { MatCardModule } from '@angular/material/card';
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { LayoutComponent } from './layout/layout.component';
@@ -34,18 +36,10 @@ import { DataService } from './_services/data.service';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    CardModule,
-    MatFormFieldModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatButtonModule,
-    ButtonModule,
-    MatCardModule,
-    ToastModule,
     FarmerModule,
-    MatToolbarModule,
-    MatIconModule,
+    RetailerModule,
+    ProducerModule,
+    SharedModule.forRoot(),
     AppRoutingModule
   ],
   providers: [

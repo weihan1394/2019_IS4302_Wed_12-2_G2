@@ -1,3 +1,4 @@
+import { CreateCropComponent } from './create-crop/create-crop.component';
 import { LayoutComponent } from './../layout/layout.component';
 import { FarmerComponent } from './farmer.component';
 import { AuthGuard } from './../_guards/auth-guard';
@@ -10,7 +11,8 @@ const routes: Routes = [
   {
     path: '', component: LayoutComponent, canActivate: [AuthGuard], canActivateChild: [AuthGuard], children: [
       { path: 'farmer', component: FarmerComponent },
-      { path: 'farmer/editCrop/:id', component: EditCropComponent }
+      { path: 'farmer/editCrop/:id', component: EditCropComponent },
+      { path: 'farmer/createCrop', component: CreateCropComponent }
     ]
   }
 
