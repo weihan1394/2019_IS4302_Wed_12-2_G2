@@ -1,3 +1,4 @@
+import { DistributorModule } from './distributor/distributor.module';
 import { ProducerModule } from './producer/producer.module';
 import { SharedModule } from './_shared/shared.module';
 import { RetailerModule } from './retailer/retailer.module';
@@ -24,13 +25,15 @@ import { ToastModule } from 'primeng/toast';
 import { LayoutComponent } from './layout/layout.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { DataService } from './_services/data.service';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    LayoutComponent
+    LayoutComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -39,6 +42,7 @@ import { DataService } from './_services/data.service';
     FarmerModule,
     RetailerModule,
     ProducerModule,
+    DistributorModule,
     SharedModule.forRoot(),
     AppRoutingModule
   ],

@@ -20,7 +20,7 @@ var server = https.createServer( options, app );
 // });
 
 // reverse proxy (login)
-app.use("/foodie", proxy("http://localhost:8080/FoodIEBackend-war/ws/GenericResource"));
+app.use("/foodie", proxy("http://localhost:8282/FoodIEBackend-war/ws/GenericResource"));
 
 server.listen( port, function () {
     console.log( 'Express server listening on port ' + server.address().port );

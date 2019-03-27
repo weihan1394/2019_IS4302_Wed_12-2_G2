@@ -56,7 +56,16 @@ export class LoginComponent implements OnInit {
           if(this.returnUrl) {
             this.router.navigate([this.returnUrl]);
           } else {
-            this.router.navigate(['/home']);
+            if(res.role == "FARMER") {
+              this.router.navigate(['/farmer']);
+            } else if(res.role == "PRODUCER") {
+              this.router.navigate(['/producer']);
+            } else if(res.role == "DISTRIBUTOR") {
+              this.router.navigate(['/distributor']);
+            } else {
+              this.router.navigate(['/retailer']);
+            }
+            // this.router.navigate(['/home']);
           }
           
         }, error => {

@@ -1,4 +1,5 @@
-import { Router } from '@angular/router';
+import { AuthenticationService } from './../_services/authentication.service';
+import { Router, RouterStateSnapshot } from '@angular/router';
 import { DataService } from './../_services/data.service';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
@@ -11,7 +12,7 @@ export class LayoutComponent implements OnInit {
 
   title: string;
   displayTitle: boolean;
-  constructor(private dataService: DataService, private router: Router) { }
+  constructor(private dataService: DataService, private router: Router, private authenticationService:AuthenticationService) { }
 
   ngOnInit() {
     this.displayTitle = false;
@@ -25,7 +26,8 @@ export class LayoutComponent implements OnInit {
   }
 
   clickSignOut() {
-
+    this.authenticationService.logout();
+    this.router.navigate(['/login']);
   }
 
   back() {

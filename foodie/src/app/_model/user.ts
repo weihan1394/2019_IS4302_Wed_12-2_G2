@@ -3,15 +3,15 @@ export class User {
     email: string;
     firstName: string;
     lastName: string;
-    userRoleEnum: UserRoleEnum;
+    role: UserRoleEnum;
     token: string;
 
-    constructor(id:string, email: string, firstName: string, lastName: string, userRoleEnum: UserRoleEnum) {
+    constructor(id:string, email: string, firstName: string, lastName: string, role: UserRoleEnum) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.userRoleEnum = userRoleEnum;
+        this.role = role;
     }
 }
 
