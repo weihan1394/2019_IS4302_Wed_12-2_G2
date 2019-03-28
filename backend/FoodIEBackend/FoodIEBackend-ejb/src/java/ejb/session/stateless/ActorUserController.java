@@ -32,9 +32,9 @@ public class ActorUserController implements ActorUserControllerLocal {
     private final ValidatorFactory validatorFactory;
     private final Validator validator;
 
-    private JWTManager jWTManager;
+    private final JWTManager jWTManager;
     
-    private Gson gson;
+    private final Gson gson;
 
     
     public ActorUserController() {
