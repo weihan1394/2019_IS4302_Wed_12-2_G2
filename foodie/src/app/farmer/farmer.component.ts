@@ -17,6 +17,7 @@ export class FarmerComponent implements OnInit {
     private dataService:DataService) { }
 
   ngOnInit() {
+    this.farmerService.retrieveAllProducers();
     this.dataService.changeTitle("View Crops");
     this.cols = [
       { field: 'ID', header: 'ID' },

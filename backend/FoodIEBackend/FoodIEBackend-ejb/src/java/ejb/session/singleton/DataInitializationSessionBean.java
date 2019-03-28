@@ -39,9 +39,9 @@ public class DataInitializationSessionBean {
     private void initializeData() {
         try {
             actorUserControllerLocal.createNewActorUser(new ActorUserEntity("Lee", "Alice", "alice@test.com", "password", UserRole.FARMER));
-            actorUserControllerLocal.createNewActorUser(new ActorUserEntity("Lee", "Bob", "bob@test.com", "password", UserRole.FARMER));
-            actorUserControllerLocal.createNewActorUser(new ActorUserEntity("Lee", "Charlie", "charlie@test.com", "password", UserRole.FARMER));
-            actorUserControllerLocal.createNewActorUser(new ActorUserEntity("Lee", "Delta", "delta@test.com", "password", UserRole.FARMER));
+            actorUserControllerLocal.createNewActorUser(new ActorUserEntity("Lee", "Bob", "bob@test.com", "password", UserRole.PRODUCER));
+            actorUserControllerLocal.createNewActorUser(new ActorUserEntity("Lee", "Charlie", "charlie@test.com", "password", UserRole.DISTRIBUTOR));
+            actorUserControllerLocal.createNewActorUser(new ActorUserEntity("Lee", "Delta", "delta@test.com", "password", UserRole.RETAILER));
             
         } catch (InputDataValidationException ex) {
             System.err.println("********** DataInitializationSessionBean.initializeData(): " + ex.getMessage());

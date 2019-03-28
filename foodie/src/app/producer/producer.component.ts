@@ -48,6 +48,7 @@ export class ProducerComponent implements OnInit {
 
   onCropRowSelect(event) {
     let selectData = event.data;
+    this.router.navigate(['producer/createBatch/' + selectData.ID]);
     // console.log(selectData);
     // this.router.navigate(['farmer/editCrop', selectData.ID])
   }
