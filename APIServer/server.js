@@ -24,4 +24,4 @@ app.use("/foodie", proxy("http://localhost:8282/FoodIEBackend-war/ws/GenericReso
 
 server.listen( port, function () {
     console.log( 'Express server listening on port ' + server.address().port );
-} );
+});
