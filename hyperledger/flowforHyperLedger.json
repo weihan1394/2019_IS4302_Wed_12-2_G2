@@ -1,0 +1,216 @@
+1. Create Farmer
+
+SerinFarmVegetables1
+{
+  "$class": "org.is4302foodie.Farmer",
+  "farmerLicense": "F43514",
+  "farmingActivity": "Farm Vegetables",
+  "Id": "KokFahTechnologyFarm",
+  "name": "Kok Fah Technology Farm",
+  "emailAddress": "KohFT@foodie.com",
+  "address": {
+    "$class": "org.is4302foodie.Address",
+    "street": "Pasir ris",
+    "postcode": "524632",
+    "country": "Singapore"
+  },
+  "contactNumber": 83699530
+}
+
+2. Create Producer
+
+FirstClassHanWeiProducer1
+{
+  "$class": "org.is4302foodie.Producer",
+  "membershipType": "First Class",
+  "category": "FROZENFOOD",
+  "Id": "IinFoodSupply",
+  "name": "Iin Food Supply",
+  "emailAddress": "LinFS@foodie.com",
+  "address": {
+    "$class": "org.is4302foodie.Address",
+    "street": "Serangoon",
+    "postcode": "579345",
+    "country": "Singapore"
+  },
+  "contactNumber": 0
+}
+
+3. Create Distributor
+
+WeiHanPteLtdDistributor1
+{
+  "$class": "org.is4302foodie.Distributor",
+  "distributionCenter": "Land Only",
+  "employeeId": "Distributor1",
+  "company": "Wei Han PTE LTD",
+  "Id": "WalsonFoodDistributorPteLtd",
+  "name": "Walson Food Distributor Pte Ltd",
+  "emailAddress": "Walson@foodie.com",
+  "address": {
+    "$class": "org.is4302foodie.Address",
+    "street": "Serangoon North",
+    "postcode": "543335",
+    "country": "Singapore"
+  },
+  "contactNumber": 92499920
+}
+
+4. Create Retailer
+
+WeiHannyNUSRetailer1
+{
+  "$class": "org.is4302foodie.Retailer",
+  "groupName": "SOC",
+  "managerInCharge": "Wei Han",
+  "organisation": "NUS",
+  "Id": "NTUCFairPrice",
+  "name": "NTUC FairPrice",
+  "emailAddress": "Ntuc@foodie.com",
+  "address": {
+    "$class": "org.is4302foodie.Address",
+    "street": "Ang Mo Kio",
+    "postcode": "508323",
+    "country": "Singapore"
+  },
+  "contactNumber": 93518004
+}
+
+
+5. Create transaction FarmerCreateBatch (cropid need to generate in back end. Name, quantity, unitOfMeasurements need to get inputs )
+
+{
+ "$class": "org.is4302foodie.FarmerCreateBatch",
+ "cropId": "Minim.",
+ "name": "Eu velit.",
+ "quantity": 51230,
+ "unitOfMeasurements": "KG",
+ "farmer": "resource:org.is4302foodie.Farmer#KokFahTechnologyFarm",
+ "transactionId": "2a743e1efa5650793183336be53e3f2b48f73f3212fd00d8a11bc32cef327465",
+ "timestamp": "2019-03-25T09:41:55.263Z"
+}
+
+6. Retrieve list of ListCropsWhereProducerIsNull to select the crop for the next transaction
+
+{
+ "$class": "org.is4302foodie.ListCropsWhereProducerIsNull",
+ "crops": {
+  "$class": "org.is4302foodie.Crop",
+  "cropId": "6046",
+  "name": "Incididunt nulla exercitation.",
+  "unitOfMeasurements": "KG",
+  "harvestedDate": "2019-03-27T02:20:40.274Z",
+  "harvestedTime": "2019-03-27T02:20:40.274Z",
+  "quantity": 65051,
+  "farmer": "resource:org.is4302foodie.Farmer#KokFahTechnologyFarm"
+ },
+ "transactionId": "454e0e6d33326446f308c2939fb033f3f5431bd02f41b87eb97e2ba56d69294d",
+ "timestamp": "2019-03-27T02:20:44.569Z"
+}
+
+7. Create transaction ProducerTransferBatch (User select Crop from the above list. Input quantity and UOM) 
+
+{
+ "$class": "org.is4302foodie.ProducerTransferBatch",
+ "crop": "resource:org.is4302foodie.Crop#Minim.",
+ "quantity": 25169,
+ "unitOfMeasurements": "KG",
+ "producer": "resource:org.is4302foodie.Producer#IinFoodSupply",
+ "transactionId": "06efcc82e358fb3c8ca888d1efa32ac8656a7ecc9da4eba91521d961fd1b8f9b",
+ "timestamp": "2019-03-27T02:18:27.350Z"
+}
+
+8. Retrieve list of ListCropsWhereFinishedGoodIsNull to select the crop for the next transaction
+
+{
+ "$class": "org.is4302foodie.ListCropsWhereFinishedGoodIsNull",
+ "crops": {
+  "$class": "org.is4302foodie.Crop",
+  "cropId": "2330",
+  "name": "",
+  "unitOfMeasurements": "KG",
+  "harvestedDate": "2019-03-27T02:21:39.642Z",
+  "harvestedTime": "2019-03-27T02:21:39.642Z",
+  "quantity": 0,
+  "farmer": "resource:org.is4302foodie.Farmer#KokFahTechnologyFarm"
+ },
+ "transactionId": "d8a75b450584352b608a1ed6f377bc54b06c54aea4cee4f618ccd4d08926a607",
+ "timestamp": "2019-03-27T02:21:41.604Z"
+}
+
+9. Create finished goods ProducerCreateProcessedBatch (user select the crops and input quantity, unitOfMeasurements, packType and generate goodId)
+
+{
+ "$class": "org.is4302foodie.ProducerCreateProcessedBatch",
+ "goodId": "Occaecat elit nulla quis.",
+ "quantity": 52683,
+ "unitOfMeasurements": "KG",
+ "packType": "BOX",
+ "crop": "resource:org.is4302foodie.Crop#Minim.",
+ "producer": "resource:org.is4302foodie.Producer#IinFoodSupply",
+ "transactionId": "88cd5ff098be512b25dce257184a0a61dd26b232e3b6e6f959b4dc7bf359bb55",
+ "timestamp": "2019-03-27T02:19:24.248Z"
+}
+
+10. Retrieve list of ListFinishedGoodWhereDistributorIsNull to select the crop for the next transaction
+
+{
+ "$class": "org.is4302foodie.ListFinishedGoodWhereDistributorIsNull",
+ "finishedGood": {
+  "$class": "org.is4302foodie.FinishedGood",
+  "goodId": "0490",
+  "packType": "BOX",
+  "processedDate": "2019-03-27T02:23:19.903Z",
+  "processedTime": "2019-03-27T02:23:19.903Z",
+  "status": "UNPROCESSED",
+  "quantity": 0,
+  "unitOfMeasurements": "KG",
+  "collectedCrop": "resource:org.is4302foodie.Crop#3878",
+  "sourceOwner": "resource:org.is4302foodie.Farmer#7876",
+  "producer": "resource:org.is4302foodie.Producer#6067"
+ },
+ "transactionId": "745631a8ca6fdc4631d236e374060464617c5e5897c68e83ae500cd3e253353c",
+ "timestamp": "2019-03-27T02:23:21.911Z"
+}
+11.  Create finished goods DistributorCollectProcessedBatch (user select the finishedGood)
+
+{
+ "$class": "org.is4302foodie.DistributorCollectProcessedBatch",
+ "finishedGood": "resource:org.is4302foodie.FinishedGood#Occaecat%20elit%20nulla%20quis.",
+ "distributor": "resource:org.is4302foodie.Distributor#WalsonFoodDistributorPteLtd",
+ "transactionId": "c171fa0073f0c92272af26379583d37286166b137faa4be8a7194c91d6153f0f",
+ "timestamp": "2019-03-27T02:24:40.904Z"
+}
+
+12. Retrieve list of ListFinishedGoodWhereRetailerIsNull to select the crop for the next transaction
+
+{
+ "$class": "org.is4302foodie.ListFinishedGoodWhereRetailerIsNull",
+ "finishedGood": {
+  "$class": "org.is4302foodie.FinishedGood",
+  "goodId": "7774",
+  "packType": "BOX",
+  "processedDate": "2019-03-27T02:25:01.804Z",
+  "processedTime": "2019-03-27T02:25:01.804Z",
+  "status": "UNPROCESSED",
+  "quantity": 0,
+  "unitOfMeasurements": "KG",
+  "collectedCrop": "resource:org.is4302foodie.Crop#5314",
+  "sourceOwner": "resource:org.is4302foodie.Farmer#5862",
+  "producer": "resource:org.is4302foodie.Producer#9690"
+ },
+ "transactionId": "fe5ff2f16f92cedf484b1ce5ee0d498f48f00102b37b5943a33498299f7f87ac",
+ "timestamp": "2019-03-27T02:25:03.642Z"
+}
+
+
+14. Create finished goods RetailerConfirmCollection (user select the finishedGood)
+{
+ "$class": "org.is4302foodie.RetailerConfirmCollection",
+ "finishedGood": "resource:org.is4302foodie.FinishedGood#Occaecat%20elit%20nulla%20quis.",
+ "retailer": "resource:org.is4302foodie.Retailer#NTUCFairPrice",
+ "transactionId": "05bdb4e9602ecb16afabdcf9425348f9bbb122d86b45408f72f9178c014d49b4",
+ "timestamp": "2019-03-27T02:25:45.348Z"
+}
+
+
