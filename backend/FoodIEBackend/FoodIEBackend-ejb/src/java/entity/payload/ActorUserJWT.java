@@ -1,14 +1,14 @@
 package entity.payload;
 
-import util.enumeration.UserRole;
+import util.enumeration.CompanyRole;
 
 public class ActorUserJWT {
     private String email;
     private String firstName;
     private String lastName;
-    private UserRole role;
+    private CompanyRole role;
 
-    public ActorUserJWT(String email, String firstName, String lastName, UserRole role) {
+    public ActorUserJWT(String email, String firstName, String lastName, CompanyRole role) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -39,11 +39,11 @@ public class ActorUserJWT {
         this.lastName = lastName;
     }
 
-    public UserRole getRole() {
+    public CompanyRole getRole() {
         return role;
     }
 
-    public void setRole(UserRole role) {
+    public void setRole(CompanyRole role) {
         this.role = role;
     }
     
