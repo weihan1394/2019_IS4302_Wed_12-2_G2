@@ -62,4 +62,10 @@ export class ProducerService {
     )
   }
 
+  collectCrop(cropId) {
+    return this.httpClient.get<any>(this.baseUrl + "collectCrop?cropId=" + cropId).pipe(
+      tap(data => { console.log(data) }),
+      catchError(this.handleError)
+    )
+  }
 }

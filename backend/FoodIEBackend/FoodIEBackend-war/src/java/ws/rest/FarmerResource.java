@@ -120,7 +120,7 @@ public class FarmerResource {
         jsonObject.addProperty("hashTransaction", token);
         jsonObject.addProperty("farmer", "resource:org.is4302foodie.Farmer#KokFahTechnologyFarm");
         jsonObject.remove("producer");
-//        jsonObject.addProperty("producer", "resource:org.is4302foodie.Producer#" + producer);
+        jsonObject.addProperty("producer", "resource:org.is4302foodie.Producer#" + producer);
 
         System.err.println(jsonObject);
 

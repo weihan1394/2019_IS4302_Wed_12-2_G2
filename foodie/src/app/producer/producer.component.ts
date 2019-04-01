@@ -1,3 +1,4 @@
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { User } from './../_model/user';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
@@ -16,8 +17,8 @@ export class ProducerComponent implements OnInit {
   colsProcessed: any[];
   crops: Array<any>;
   processed: Array<any>;
-  constructor(private producerService: ProducerService, private formBuilder: FormBuilder, private router: Router,
-    private dataService: DataService) { }
+  constructor(private producerService: ProducerService, private messageService: MessageService, private router: Router,
+    private dataService: DataService, private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
     let currentUser: User = JSON.parse(localStorage.getItem("currentUser"));
@@ -62,9 +63,36 @@ export class ProducerComponent implements OnInit {
 
   onCropRowSelect(event) {
     let selectData = event.data;
-    this.router.navigate(['producer/createBatch/' + selectData.cropId]);
+    if (selectData.collects == "NOT_YET_COLLECTED") {
+      this.confirmationService.confirm({
+        message: 'Do you want to change the status to COLLECTED?',
+        header: 'Confirmation',
+        icon: 'pi pi-exclamation-triangle',
+        accept: () => {
+         this.producerService.collectCrop(selectData.cropId).subscribe(
+           res => {
+             for(let c of this.crops) {
+               if(c.cropId == selectData.cropId) {
+                 c.collects = "COLLECTED"
+                 break;
+               }
+               this.messageService.add({ severity: 'success', summary: 'Success', detail: "Crop status changed!" });
+             }
+           }, err => {
+             
+           }
+         )
+        },
+        reject: () => {
+        }
+      });
+    } else if (selectData.collects == "COLLECTED") {
+      this.router.navigate(['producer/createBatch/' + selectData.cropId]);
+    }
+
     // console.log(selectData);
     // this.router.navigate(['farmer/editCrop', selectData.ID])
+
   }
 
   onProcessedRowSelect(event) {

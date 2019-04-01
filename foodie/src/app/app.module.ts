@@ -20,7 +20,7 @@ import { MatInputModule, MatNativeDateModule, MatIconModule } from '@angular/mat
 import { MatButtonModule } from '@angular/material/button';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule, FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { LayoutComponent } from './layout/layout.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -52,7 +52,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     AuthenticationService,
     FormBuilder,
     MessageService,
-    DataService
+    DataService,
+    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })

@@ -16,6 +16,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { MatTableModule } from '@angular/material/table';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 @NgModule({
   declarations: [],
   imports: [
@@ -39,7 +40,8 @@ import { MatTableModule } from '@angular/material/table';
     MatCheckboxModule,
     InputTextModule,
     DropdownModule,
-    MatTableModule
+    MatTableModule,
+    ConfirmDialogModule
   ],
   exports: [
     CommonModule,
@@ -62,7 +64,8 @@ import { MatTableModule } from '@angular/material/table';
     MatCheckboxModule,
     InputTextModule,
     DropdownModule,
-    MatTableModule
+    MatTableModule,
+    ConfirmDialogModule
   ]
 })
 export class SharedModule {
