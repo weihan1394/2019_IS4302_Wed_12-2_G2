@@ -34,7 +34,7 @@ export class AuthenticationService {
       map(rsp => {
         const tokenPayLoad = decode(rsp.success);
         let user:User = tokenPayLoad.LoggedInUser;
-        user.token = rsp;
+        user.token = rsp.success;
         if (user && tokenPayLoad) {
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);

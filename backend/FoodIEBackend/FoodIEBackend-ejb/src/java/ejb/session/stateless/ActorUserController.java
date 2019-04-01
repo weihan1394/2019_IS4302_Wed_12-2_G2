@@ -86,7 +86,7 @@ public class ActorUserController implements ActorUserControllerLocal {
             String passwordHash = CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(password + actorUserEntity.getSalt()));
             
             if (actorUserEntity.getPassword().equals(passwordHash)) {
-                String jsonStr = gson.toJson(actorUserEntity);
+//                String jsonStr = gson.toJson(actorUserEntity);
                 String response = jWTManager.createJWT(actorUserEntity, null, "login");
                 return response;
             } else {

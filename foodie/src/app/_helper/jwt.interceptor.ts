@@ -14,6 +14,8 @@ export class JwtInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         let currentUser = this.authenticationService.currentUserValue;
         if (currentUser && currentUser.token) {
+            let token:string = currentUser.token;
+            console.log(token);
             req = req.clone({
                 setHeaders: {
                     Authorization: `Bearer ${currentUser.token}`
