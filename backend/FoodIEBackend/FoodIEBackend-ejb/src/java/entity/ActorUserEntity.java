@@ -8,10 +8,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
-import util.enumeration.UserRole;
+import util.enumeration.CompanyRole;
 import util.security.CryptographicHelper;
 
 @Entity
@@ -42,21 +43,23 @@ public class ActorUserEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @NotNull
-    private UserRole userRoleEnum;
+    private CompanyRole userRoleEnum;
+    @ManyToOne
+    private CompanyEntity company;
     
     public ActorUserEntity() {
         // generate a salt
         this.salt = CryptographicHelper.getInstance().generateRandomString(32);
     }
 
-    public ActorUserEntity(String firstName, String lastName, String email, String password, UserRole role) {
+    public ActorUserEntity(String firstName, String lastName, String email, String password, CompanyRole role, CompanyEntity company) {
         this();
         
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.userRoleEnum = role;
-        
+        this.company = company;
         setPassword(password);
     }
     
@@ -113,12 +116,20 @@ public class ActorUserEntity implements Serializable {
         this.salt = salt;
     }
 
-    public UserRole getUserRoleEnum() {
+    public CompanyRole getUserRoleEnum() {
         return userRoleEnum;
     }
 
-    public void setUserRoleEnum(UserRole userRoleEnum) {
+    public void setUserRoleEnum(CompanyRole userRoleEnum) {
         this.userRoleEnum = userRoleEnum;
+    }
+
+    public CompanyEntity getCompany() {
+        return company;
+    }
+
+    public void setCompany(CompanyEntity company) {
+        this.company = company;
     }
     
     @Override
