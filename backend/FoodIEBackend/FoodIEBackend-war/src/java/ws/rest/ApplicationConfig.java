@@ -19,6 +19,8 @@ public class ApplicationConfig extends Application {
     }
 
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(ws.rest.FarmerResource.class);
         resources.add(ws.rest.GenericResource.class);
+        resources.add(ws.rest.ProducerResource.class);
     }
 }

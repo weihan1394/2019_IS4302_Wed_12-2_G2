@@ -1,18 +1,18 @@
 {
 	"/api": {
-		"target": "https://localhost:8323/foodie/FoodIEBackend-war/ws/GenericResource/",
+		"target": "https://localhost:8323/foodie/FoodIEBackend-war/ws/",
 		"secure": false,
 		"changeOrigin": true,
 		"pathRewrite": {
 			"^/api": ""
 		}
 	},
-	"/api2" : {
-		"target": "http://is4302-3-i.comp.nus.edu.sg:3001/api/org.is4302foodie.Producer",
+	"/hyper" : {
+		"target": "http://localhost:3001/api/org.is4302foodie.Producer",
 		"secure": false,
 		"changeOrigin": true,
 		"pathRewrite": {
-			"^/api2": ""
+			"^/hyper": ""
 		}
 	}
 }

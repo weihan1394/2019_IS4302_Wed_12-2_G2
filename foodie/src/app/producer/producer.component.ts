@@ -16,39 +16,53 @@ export class ProducerComponent implements OnInit {
   colsProcessed: any[];
   crops: Array<any>;
   processed: Array<any>;
-  constructor(private producerService:ProducerService, private formBuilder: FormBuilder, private router: Router, 
-    private dataService:DataService) { }
+  constructor(private producerService: ProducerService, private formBuilder: FormBuilder, private router: Router,
+    private dataService: DataService) { }
 
   ngOnInit() {
-    let currentUser:User = JSON.parse(localStorage.getItem("currentUser"));
+    let currentUser: User = JSON.parse(localStorage.getItem("currentUser"));
     this.dataService.changeTitle("View Crops & Processed Items");
     this.colsCrops = [
-      { field: 'ID', header: 'ID' },
-      { field: 'Name', header: 'Name' },
-      { field: 'Weight', header: 'Weight' },
-      { field: 'Date', header: 'Date' },
-      { field: 'Time', header: 'Time' },
-      { field: 'finishedGood', header: 'Processed Id' }
+      { field: 'cropId', header: 'ID' },
+      { field: 'name', header: 'Name' },
+      { field: 'quantity', header: 'Weight' },
+      { field: 'unitOfMeasurements', header: 'Unit' },
+      { field: 'harvestedDate', header: 'Date' },
+      { field: 'harvestedTime', header: 'Time' },
+      { field: 'collects', header: 'Status' }
     ]
     this.colsProcessed = [
-      { field: 'ID', header: 'ID' },
+      { field: 'goodId', header: 'ID' },
       { field: 'packType', header: 'Pack Type' },
+      { field: 'quantity', header: 'Weight' },
+      { field: 'unitOfMeasurements', header: 'Unit' },
       { field: 'processedDate', header: 'Processed Date' },
-      { field: 'processedTime', header: 'Processed Time' },
-      { field: 'deliveryDate', header: 'Delivery Date' },
-      { field: 'deliveryTime', header: 'Delivery Time'},
-      { field: 'status', header: 'Status'},
-      { field: 'weight', header: 'Weight'},
-      { field: 'farmerId', header: 'Farmer Id' }
+      // { field: 'processedTime', header: 'Processed Time' },
+      // { field: 'deliveryDate', header: 'Delivery Date' },
+      // { field: 'deliveryTime', header: 'Delivery Time'},
+      { field: 'status', header: 'Status' },
+      { field: 'sourceOwner', header: 'Farmer' }
     ]
 
-    this.crops = this.producerService.retrieveCrops(currentUser.email);
-    this.processed = this.producerService.retrieveProcessed(currentUser.email);
+    this.producerService.retrieveCrops(currentUser.email).subscribe(
+      res => {
+        this.crops = res;
+      }, err => {
+        console.error(err);
+      }
+    );
+    this.producerService.retrieveProcessed(currentUser.email).subscribe(
+      res => {
+        this.processed = res;
+      }, err => {
+        console.error(err);
+      }
+    );
   }
 
   onCropRowSelect(event) {
     let selectData = event.data;
-    this.router.navigate(['producer/createBatch/' + selectData.ID]);
+    this.router.navigate(['producer/createBatch/' + selectData.cropId]);
     // console.log(selectData);
     // this.router.navigate(['farmer/editCrop', selectData.ID])
   }

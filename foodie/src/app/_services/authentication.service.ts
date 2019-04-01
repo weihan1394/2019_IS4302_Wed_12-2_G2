@@ -13,7 +13,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AuthenticationService {
-  baseUrl = "/api/";
+  baseUrl = "/api/GenericResource/";
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 

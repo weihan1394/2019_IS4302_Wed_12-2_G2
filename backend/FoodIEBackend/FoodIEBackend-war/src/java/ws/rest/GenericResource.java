@@ -8,10 +8,20 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import ejb.session.stateless.ActorUserControllerLocal;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.InitialContext;
@@ -19,9 +29,10 @@ import javax.naming.NamingException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
+import jdk.nashorn.internal.parser.JSONParser;
 import util.exception.InvalidLoginCredentialException;
-
 
 @Path("GenericResource")
 public class GenericResource {
@@ -30,11 +41,10 @@ public class GenericResource {
     private UriInfo context;
 
     private final ActorUserControllerLocal actorUserControllerLocal;
-    
-    private final Gson gson;
-    
-    private static final Logger LOGGER = Logger.getLogger( GenericResource.class.getName() );
 
+    private final Gson gson;
+
+    private static final Logger LOGGER = Logger.getLogger(GenericResource.class.getName());
 
     public GenericResource() {
         actorUserControllerLocal = lookupActorUserControllerLocal();
@@ -53,7 +63,7 @@ public class GenericResource {
         String jsonStr = gson.toJson(lsName);
         return jsonStr;
     }
-    
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
@@ -64,38 +74,31 @@ public class GenericResource {
         try {
             // definitely login succesfully
             jwtStr = actorUserControllerLocal.actorUserLogin(email, password);
-            
+
             jsonObject.addProperty("success", jwtStr);
             LOGGER.log(Level.INFO, "successful login: {0}", jwtStr);
-            
+
             return Response.status(Response.Status.OK).entity(jsonObject.toString()).build();
-        } 
-        catch (InvalidLoginCredentialException ex) {
+        } catch (InvalidLoginCredentialException ex) {
             jsonObject.addProperty("message", ex.getMessage());
             jwtStr = jsonObject.toString();
             return Response.status(Response.Status.FORBIDDEN).entity(jwtStr).build();
         }
     }
-    
+
     private ActorUserControllerLocal lookupActorUserControllerLocal() {
         try {
             javax.naming.Context c = new InitialContext();
             // weihan: naming convention to inject ejb
             // https://docs.oracle.com/javaee/6/tutorial/doc/gipjf.html
-            return (ActorUserControllerLocal)c.lookup("java:global/FoodIEBackend/FoodIEBackend-ejb/ActorUserController!ejb.session.stateless.ActorUserControllerLocal");
-        }
-        catch (NamingException namingException) {
+            return (ActorUserControllerLocal) c.lookup("java:global/FoodIEBackend/FoodIEBackend-ejb/ActorUserController!ejb.session.stateless.ActorUserControllerLocal");
+        } catch (NamingException namingException) {
             // Clean up the logger
             LOGGER.log(Level.SEVERE, "exception caught", namingException);
             throw new RuntimeException(namingException);
         }
     }
 }
-
-
-
-
-
 
 // sample for get method
 //    @GET

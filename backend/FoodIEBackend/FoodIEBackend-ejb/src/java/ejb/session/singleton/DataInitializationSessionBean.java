@@ -51,10 +51,10 @@ public class DataInitializationSessionBean {
     
     private void initializeData() {
         try {
-            actorUserControllerLocal.createNewActorUser(new ActorUserEntity("Lee", "Alice", "alice@test.com", "password", UserRole.FARMER));
-            actorUserControllerLocal.createNewActorUser(new ActorUserEntity("Lee", "Bob", "bob@test.com", "password", UserRole.PRODUCER));
-            actorUserControllerLocal.createNewActorUser(new ActorUserEntity("Lee", "Charlie", "charlie@test.com", "password", UserRole.DISTRIBUTOR));
-            actorUserControllerLocal.createNewActorUser(new ActorUserEntity("Lee", "Delta", "delta@test.com", "password", UserRole.RETAILER));
+            actorUserControllerLocal.createNewActorUser(new ActorUserEntity("Lee", "Alice", "alice_kohft@foodie.com", "password", UserRole.FARMER));
+            actorUserControllerLocal.createNewActorUser(new ActorUserEntity("Lee", "Bob", "alice_linfs@foodie.com", "password", UserRole.PRODUCER));
+            actorUserControllerLocal.createNewActorUser(new ActorUserEntity("Lee", "Charlie", "alice_walson@foodie.com", "password", UserRole.DISTRIBUTOR));
+            actorUserControllerLocal.createNewActorUser(new ActorUserEntity("Lee", "Delta", "alice_ntuc@foodie.com", "password", UserRole.RETAILER));
             
         } catch (InputDataValidationException ex) {
             System.err.println("********** DataInitializationSessionBean.initializeData(): " + ex.getMessage());

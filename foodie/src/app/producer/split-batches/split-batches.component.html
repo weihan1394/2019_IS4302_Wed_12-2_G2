@@ -1,0 +1,99 @@
+<!-- <p-table [columns]="cols" [responsive]="true" [paginator]="true" [rows]="10">
+  <ng-template pTemplate="header" let-columns>
+    <tr class="headerRow">
+      <th *ngFor="let col of columns">
+        {{col.header}}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+
+
+    <form style="width:100%" [formGroup]="batchesForm" (ngSubmit)="onSubmit()">
+      <form formArrayName="batch" *ngFor="let b of batches.controls; let i = index">
+        <tr [formGroupName]="i">
+          <td pEditableColumn>
+
+            <p-cellEditor>
+              <ng-template pTemplate="input">
+                <p-dropdown [options]="packType" formControlName=""></p-dropdown>
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{rowData.brand}}
+              </ng-template>
+            </p-cellEditor>
+            <mat-form-field>
+              <mat-select formControlName="packType" placeholder="Package Type">
+                <mat-option *ngFor="let p of packType" [value]="p.value">
+                  {{p.value}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="Distributor ID" formControlName="distributorId">
+            </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field>
+              <input matInput placeholder="Retailer ID" formControlName="retailerId">
+            </mat-form-field>
+          </td>
+        </tr>
+      </form>
+    </form>
+  </ng-template>
+</p-table> -->
+<p-toast></p-toast>
+<form [formGroup]="batchesForm" (submit)="onSubmit()">
+
+  <mat-table formArrayName="batch" #table [dataSource]="dataSource">
+
+    <ng-container cdkColumnDef="packType">
+      <mat-header-cell *cdkHeaderCellDef> Pack Type </mat-header-cell>
+      <mat-cell *cdkCellDef="let row let rowIndex = index" [formGroupName]="rowIndex">
+        <mat-form-field>
+          <mat-select formControlName="packType">
+            <mat-option *ngFor="let p of packType" [value]="p.value">
+              {{p.value}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+
+    <ng-container cdkColumnDef="weight">
+      <mat-header-cell *cdkHeaderCellDef> Weight </mat-header-cell>
+      <mat-cell *cdkCellDef="let row let rowIndex = index" [formGroupName]="rowIndex">
+        <mat-form-field>
+          <input matInput formControlName="weight">
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="distributorId">
+      <mat-header-cell *cdkHeaderCellDef> Distributor </mat-header-cell>
+      <mat-cell *cdkCellDef="let row let rowIndex = index" [formGroupName]="rowIndex">
+        <mat-form-field>
+          <input matInput formControlName="distributorId">
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container cdkColumnDef="retailerId">
+      <mat-header-cell *cdkHeaderCellDef> Retailer </mat-header-cell>
+      <mat-cell *cdkCellDef="let row let rowIndex = index" [formGroupName]="rowIndex">
+        <mat-form-field>
+          <input matInput formControlName="retailerId">
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Header and Row Declarations -->
+    <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <button id="submitBtn" pButton type="submit" class="ui-button-info ui-button-raised" label="Submit"></button>
+</form>

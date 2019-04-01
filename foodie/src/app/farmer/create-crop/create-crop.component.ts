@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { DataService } from './../../_services/data.service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { FarmerService } from './../../_services/farmer.service';
@@ -12,13 +14,15 @@ export class CreateCropComponent implements OnInit {
 
   createForm: FormGroup;
   units: any[] = [
-    { value: "kg" },
-    { value: "g" },
-    { value: "lb" }
+    { value: "KG" },
+    { value: "G" },
+    { value: "L" },
+    { value: "ML" }
   ]
   hours = [];
   minutes = [];
-  constructor(private farmerService: FarmerService, private formBuilder: FormBuilder, private dataService: DataService) { }
+  constructor(private farmerService: FarmerService, private formBuilder: FormBuilder, private dataService: DataService,
+    private messageService: MessageService, private router:Router) { }
 
   ngOnInit() {
     for (let i = 0; i < 24; i++) {
@@ -44,15 +48,15 @@ export class CreateCropComponent implements OnInit {
       unit: new FormControl('', {
         validators: [Validators.required]
       }),
-      date: new FormControl('', {
-        validators: [Validators.required]
-      }),
-      hours: new FormControl('', {
-        validators: [Validators.required]
-      }),
-      minutes: new FormControl('', {
-        validators: [Validators.required]
-      }),
+      // date: new FormControl('', {
+      //   validators: [Validators.required]
+      // }),
+      // hours: new FormControl('', {
+      //   validators: [Validators.required]
+      // }),
+      // minutes: new FormControl('', {
+      //   validators: [Validators.required]
+      // }),
       producerId: new FormControl('', {
         validators: [Validators.required]
       })
@@ -64,10 +68,19 @@ export class CreateCropComponent implements OnInit {
       let formValues = this.createForm.value;
       let name = formValues.name;
       let weight = formValues.weight;
-      let date = formValues.date;
-      let time = formValues.hours + " " + formValues.minutes;
+      let unit = formValues.unit;
+      let producer = formValues.producerId;
+      // let date = formValues.date;
+      // let time = formValues.hours + " " + formValues.minutes;
+      this.farmerService.createCrop(name, weight, unit, producer).subscribe(
+        res => {
+          this.messageService.add({ severity: 'info', summary: 'Success', detail: "Crop created!" });
+          this.router.navigate(["/farmer"]);
+        }, err => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: err });
+        }
+      )
 
-      
     } else {
       Object.keys(this.createForm.controls).forEach(field => {
         const control = this.createForm.get(field);

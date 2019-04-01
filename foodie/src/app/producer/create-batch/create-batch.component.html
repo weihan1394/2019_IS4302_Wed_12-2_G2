@@ -5,10 +5,53 @@
         <h1 class="cardHeader">Create Batch</h1>
       </p-header>
       <div class="p-grid">
+        <div *ngIf="crop != null" class="p-col-12">
+          <h3>Crop: {{crop.name}}</h3>
+          <h3>Weight: {{crop.quantity}}{{crop.unitOfMeasurements}}</h3>
+        </div>
         <div class="p-col-12">
           <form class="editForm" [formGroup]="createForm" (ngSubmit)="onSubmit()">
             <div class="p-grid">
               <div class="p-col-12">
+                <mat-checkbox formControlName="isSameData" [labelPosition]="'before'">Same data?</mat-checkbox>
+              </div>
+              <div class="p-col-12">
+                <mat-form-field>
+                  <mat-label>Select an option</mat-label>
+                  <mat-select placeholder="Split Type" formControlName="splitType"
+                    (selectionChange)="onSplitTypeChange($event)">
+                    <mat-option *ngFor="let s of splitTypes" [value]="s">
+                      {{s}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="createForm.get('splitType').hasError('required')">
+                    Please select an option
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="p-col-12" *ngIf="createForm.get('splitType').value == 'Weight'">
+                <mat-form-field>
+                  <input matInput type="number" placeholder="Weight Per Pack" formControlName="weightPerPack">
+                  <mat-error *ngIf="createForm.get('weightPerPack').hasError('required')">
+                    Weight per pack is required
+                  </mat-error>
+                  <mat-error *ngIf="createForm.get('weightPerPack').hasError('min')">
+                    Input cannot be less than 1
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="p-col-12" *ngIf="createForm.get('splitType').value == 'NumPacks'">
+                <mat-form-field>
+                  <input matInput type="number" placeholder="Number of Packs" formControlName="numPacks">
+                  <mat-error *ngIf="createForm.get('numPacks').hasError('required')">
+                    Number of pack is required
+                  </mat-error>
+                  <mat-error *ngIf="createForm.get('numPacks').hasError('min')">
+                    Input cannot be less than 1
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="p-col-12" *ngIf="createForm.get('isSameData').value">
                 <mat-form-field>
                   <mat-select formControlName="packType" placeholder="Package Type">
                     <mat-option *ngFor="let p of packType" [value]="p.value">
@@ -20,21 +63,7 @@
                   </mat-error>
                 </mat-form-field>
               </div>
-              <div class="p-col-12">
-                <mat-form-field class="unitFormField">
-                  <mat-label>Select an option</mat-label>
-                  <mat-select placeholder="Split Type" [(value)]="splitType">
-                    <mat-option>None</mat-option>
-                    <mat-option *ngFor="let s of splitTypes" [value]="s">
-                      {{s}}
-                    </mat-option>
-                  </mat-select>
-                  <mat-error *ngIf="splitType == ''">
-                    Please select an option
-                  </mat-error>
-                </mat-form-field>
-              </div>
-              <div class="p-col-12">
+              <div class="p-col-12" *ngIf="createForm.get('isSameData').value">
                 <mat-form-field>
                   <input matInput placeholder="Distributor ID" formControlName="distributorId">
                   <mat-error *ngIf="createForm.get('distributorId').hasError('required')">
@@ -42,9 +71,17 @@
                   </mat-error>
                 </mat-form-field>
               </div>
+              <div class="p-col-12" *ngIf="createForm.get('isSameData').value">
+                <mat-form-field>
+                  <input matInput placeholder="Retailer ID" formControlName="retailerId">
+                  <mat-error *ngIf="createForm.get('retailerId').hasError('required')">
+                    Retailer ID is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
               <div class="p-col-12 p-justify-between btnContainer">
                 <button id="submitBtn" pButton type="submit" class="ui-button-info ui-button-raised"
-                  label="Create"></button>
+                  [label]="btnLabel"></button>
               </div>
             </div>
           </form>

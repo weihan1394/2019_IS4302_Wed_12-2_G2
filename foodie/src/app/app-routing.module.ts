@@ -17,7 +17,7 @@ const routes: Routes = [
   },
   { path: 'farmer', redirectTo: '/farmer', pathMatch: 'full' },
   { path: 'retailer', redirectTo: '/retailer', pathMatch: 'full' },
-  { path: 'pageNotFound', component: PageNotFoundComponent },
+  // { path: 'pageNotFound', component: PageNotFoundComponent },
   { path: '**', component: PageNotFoundComponent }
 ];
 

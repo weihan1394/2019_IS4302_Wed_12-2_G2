@@ -13,22 +13,37 @@ export class FarmerComponent implements OnInit {
 
   cols: any[];
   crops: Array<any>;
-  constructor(private farmerService: FarmerService, private formBuilder: FormBuilder, private router: Router, 
-    private dataService:DataService) { }
+  constructor(private farmerService: FarmerService, private formBuilder: FormBuilder, private router: Router,
+    private dataService: DataService) { }
 
   ngOnInit() {
-    this.farmerService.retrieveAllProducers();
+    // this.farmerService.retrieveAllProducers().subscribe(
+    //   res => {
+    //     console.log(res);
+    //   }, err => {
+    //     console.error(err);
+    //   }
+    // );
     this.dataService.changeTitle("View Crops");
     this.cols = [
-      { field: 'ID', header: 'ID' },
-      { field: 'Name', header: 'Name' },
-      { field: 'Weight', header: 'Weight' },
-      { field: 'Date', header: 'Date' },
-      { field: 'Time', header: 'Time' },
-      { field: 'ProducerId', header: 'Producer Id' }
+      { field: 'cropId', header: 'ID' },
+      { field: 'name', header: 'Name' },
+      { field: 'quantity', header: 'Weight' },
+      { field: 'unitOfMeasurements', header: 'Unit' },
+      { field: 'harvestedDate', header: 'Date' },
+      { field: 'harvestedTime', header: 'Time' },
+      { field: 'producerId', header: 'Producer Id' },
+      { field: 'collects', header: 'Status' }
     ]
 
-    this.crops = this.farmerService.retrieveCrops();
+    this.farmerService.retrieveCrops().subscribe(
+      res => {
+        this.crops = res;
+      }, error => {
+        console.error(error);
+
+      }
+    );
   }
 
   onRowSelect(event) {

@@ -12,8 +12,8 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class FarmerService {
+  baseUrl = "/api/farmer/"
 
-  bcUrl = "/api2/";
   crops: any[] = [
     { ID: '1', Name: 'Corn', Weight: '500g', Date: moment('23/3/2019', "DD-MM-YYYY").format("DD-MM-YYYY"), Time: moment('08:00', "hh:mm").format("hh:mm"), ProducerId: "1" },
     { ID: '2', Name: 'Carrot', Weight: '200g', Date: moment('20/3/2019', "DD-MM-YYYY").format("DD-MM-YYYY"), Time: moment('14:00', "hh:mm").format("hh:mm"), ProducerId: "2" },
@@ -25,7 +25,11 @@ export class FarmerService {
   constructor(private httpClient:HttpClient) { }
 
   retrieveCrops() {
-    return this.crops;
+    let farmer = JSON.parse(localStorage.getItem('currentUser'));
+    return this.httpClient.get<any>(this.baseUrl + "retrieveCropsByFarmer?email=" + farmer.email).pipe(
+      tap(data => console.log(data)),
+      catchError(this.handleError)
+    )
   }
 
   retrieveCropsById(id) {
@@ -39,16 +43,16 @@ export class FarmerService {
     return null;
   }
 
-  createCrop(name:string, weight:number, unit: string, date: Date, time:string): Observable<any> {
-    let data = {"name": name, "weight": weight, "unit": unit, "date": date, "time": time};
-    return this.httpClient.post<any>("", data, httpOptions).pipe(
+  createCrop(name:string, weight:number, unit: string, producer:string): Observable<any> {
+    let data = {"name": name, "quantity": weight, "unitOfMeasurements": unit, "producer": producer};
+    return this.httpClient.post<any>(this.baseUrl + "createCrop", data, httpOptions).pipe(
       catchError(this.handleError)
     )
   }
 
   retrieveAllProducers() {
     console.log("called")
-    return this.httpClient.get<any>(this.bcUrl).pipe(
+    return this.httpClient.get<any>("").pipe(
       tap(data => {"abc" + console.log(data)}),
       catchError(this.handleError)
     );

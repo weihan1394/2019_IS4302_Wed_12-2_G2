@@ -14,8 +14,8 @@ export class AuthGuard implements CanActivate {
       if (event instanceof NavigationEnd) {
         this.previousUrl = this.currentUrl;
         this.currentUrl = event.url;
-        console.error(this.previousUrl);
-        console.error(this.currentUrl);
+        // console.error(this.previousUrl);
+        // console.error(this.currentUrl);
       };
     });
   }
@@ -26,7 +26,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     const currentUser = this.authenticationService.currentUserValue;
-    if (!currentUser) {
+    if (!currentUser) { 
       // not logged in so redirect to login page with the return url
       this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
       return false;

@@ -10,10 +10,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CardModule } from 'primeng/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatInputModule, MatNativeDateModule, MatIconModule } from '@angular/material';
+import { MatInputModule, MatNativeDateModule, MatIconModule, MatCheckboxModule } from '@angular/material';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
-
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { MatTableModule } from '@angular/material/table';
 @NgModule({
   declarations: [],
   imports: [
@@ -33,7 +35,11 @@ import { MatButtonModule } from '@angular/material/button';
     ToastModule,
     MatToolbarModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCheckboxModule,
+    InputTextModule,
+    DropdownModule,
+    MatTableModule
   ],
   exports: [
     CommonModule,
@@ -52,7 +58,11 @@ import { MatButtonModule } from '@angular/material/button';
     ToastModule,
     MatToolbarModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCheckboxModule,
+    InputTextModule,
+    DropdownModule,
+    MatTableModule
   ]
 })
 export class SharedModule {
