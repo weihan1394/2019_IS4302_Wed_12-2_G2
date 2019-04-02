@@ -1,6 +1,8 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Email;
@@ -46,10 +49,13 @@ public class ActorUserEntity implements Serializable {
     private CompanyRole userRoleEnum;
     @ManyToOne
     private CompanyEntity company;
+    @OneToMany(mappedBy = "actorUser")
+    private List<LoggedInUserRecordEntity> loggedInUserRecordEntities;
     
     public ActorUserEntity() {
         // generate a salt
         this.salt = CryptographicHelper.getInstance().generateRandomString(32);
+        this.loggedInUserRecordEntities = new ArrayList<>();
     }
 
     public ActorUserEntity(String firstName, String lastName, String email, String password, CompanyRole role, CompanyEntity company) {
@@ -131,6 +137,16 @@ public class ActorUserEntity implements Serializable {
     public void setCompany(CompanyEntity company) {
         this.company = company;
     }
+
+    public List<LoggedInUserRecordEntity> getLoggedInUserRecordEntities() {
+        return loggedInUserRecordEntities;
+    }
+
+    public void setLoggedInUserRecordEntities(List<LoggedInUserRecordEntity> loggedInUserRecordEntities) {
+        this.loggedInUserRecordEntities = loggedInUserRecordEntities;
+    }
+    
+    
     
     @Override
     public int hashCode() {

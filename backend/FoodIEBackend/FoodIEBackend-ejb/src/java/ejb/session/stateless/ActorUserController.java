@@ -2,8 +2,10 @@ package ejb.session.stateless;
 
 import com.google.gson.Gson;
 import entity.ActorUserEntity;
+import entity.LoggedInUserRecordEntity;
 import java.util.List;
 import java.util.Set;
+import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -23,26 +25,27 @@ import util.security.JWTManager;
 
 @Stateless
 @Local(ActorUserControllerLocal.class)
-
 public class ActorUserController implements ActorUserControllerLocal {
 
     @PersistenceContext(unitName = "FoodIEBackend-ejbPU")
     private EntityManager em;
 
+    @EJB
+    private LoggedInUserRecordEntityControllerLocal loggedInUserRecordEntityControllerLocal;
+
     private final ValidatorFactory validatorFactory;
     private final Validator validator;
 
     private final JWTManager jWTManager;
-    
+
     private final Gson gson;
 
-    
     public ActorUserController() {
         validatorFactory = Validation.buildDefaultValidatorFactory();
         validator = validatorFactory.getValidator();
-        
+
         gson = new Gson();
-        
+
         jWTManager = new JWTManager();
     }
 
@@ -60,34 +63,44 @@ public class ActorUserController implements ActorUserControllerLocal {
             throw new InputDataValidationException(prepareInputDataValidationErrorsMessage(constraintViolations));
         }
     }
-    
+
     @Override
     public List<ActorUserEntity> retrieveAllActorUser() {
         Query query = em.createQuery("SELECT au FROM ActorUserEntity au");
         return query.getResultList();
     }
-    
+
     @Override
     public ActorUserEntity retrieveActorUserByEmail(String email) throws UserActorNotFoundException {
+        System.out.println("checking.... " + email);
         Query query = em.createQuery("SELECT au FROM ActorUserEntity au WHERE au.email = :inEmail");
         query.setParameter("inEmail", email);
-        
+
         try {
-            return (ActorUserEntity)query.getSingleResult();
+            return (ActorUserEntity) query.getSingleResult();
         } catch (NoResultException | NonUniqueResultException ex) {
             throw new UserActorNotFoundException("User: " + email + " does not exist!");
         }
     }
-    
+
     @Override
     public String actorUserLogin(String email, String password) throws InvalidLoginCredentialException {
         try {
             ActorUserEntity actorUserEntity = retrieveActorUserByEmail(email);
             String passwordHash = CryptographicHelper.getInstance().byteArrayToHexString(CryptographicHelper.getInstance().doMD5Hashing(password + actorUserEntity.getSalt()));
-            
+
             if (actorUserEntity.getPassword().equals(passwordHash)) {
 //                String jsonStr = gson.toJson(actorUserEntity);
+
+                // logged the login jwt token to database
+                // create jwt
                 String response = jWTManager.createJWT(actorUserEntity, null, "login");
+
+                // logged the log in transaction
+                LoggedInUserRecordEntity loggedInUserRecordEntity = new LoggedInUserRecordEntity(response, actorUserEntity);
+                loggedInUserRecordEntityControllerLocal.createNewLoggedInUserRecord(loggedInUserRecordEntity);
+
+                // return the jwt response
                 return response;
             } else {
                 throw new InvalidLoginCredentialException("Username does not exist or invalid password!");
