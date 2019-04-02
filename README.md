@@ -27,6 +27,7 @@ Backend
 - [✓] Setup POSTMAN testing environment
 - [ ] Setup transaction
 ~~~
+- [Trello](https://trello.com/b/bnIMZ5vF/foodie)
 
 ##  Special Note
 ### 1. Hyperledger
