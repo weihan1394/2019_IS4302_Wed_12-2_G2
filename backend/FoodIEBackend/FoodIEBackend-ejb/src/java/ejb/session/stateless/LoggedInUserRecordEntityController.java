@@ -29,4 +29,13 @@ public class LoggedInUserRecordEntityController implements LoggedInUserRecordEnt
         Query query = em.createQuery("SELECT liur FROM LoggedInUserRecordEntity liur");
         return query.getResultList();
     }
+    
+    @Override
+    public LoggedInUserRecordEntity retrieveLoggedInUserByJWT(String JWTToken){
+        System.out.println("herehrehrehrh" + JWTToken);
+        Query query = em.createQuery("SELECT liur FROM LoggedInUserRecordEntity liur WHERE liur.JWTToken = :JWTToken");
+        query.setParameter("JWTToken", JWTToken);
+        
+        return (LoggedInUserRecordEntity)query.getSingleResult();
+    }
 }

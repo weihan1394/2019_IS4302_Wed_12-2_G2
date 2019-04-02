@@ -10,5 +10,7 @@ public interface LoggedInUserRecordEntityControllerLocal {
     public LoggedInUserRecordEntity createNewLoggedInUserRecord(LoggedInUserRecordEntity loggedInUserRecordEntity);
 
     public List<LoggedInUserRecordEntity> retrieveAllLoggedInUserRecord();
+
+    public LoggedInUserRecordEntity retrieveLoggedInUserByJWT(String JWTToken);
     
 }

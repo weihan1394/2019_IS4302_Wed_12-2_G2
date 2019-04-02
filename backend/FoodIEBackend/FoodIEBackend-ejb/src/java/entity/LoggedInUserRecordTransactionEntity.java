@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import util.enumeration.Transaction;
 
 @Entity
@@ -36,6 +37,19 @@ public class LoggedInUserRecordTransactionEntity implements Serializable {
     
     @Column(columnDefinition = "CHAR(128)")
     private String hashedTransaction;
+    
+    @ManyToOne
+    private LoggedInUserRecordEntity loggedInUserRecordEntity;
+    
+    
+
+    public LoggedInUserRecordTransactionEntity(String JWTToken, Transaction transactionJob, String hashedTransaction, LoggedInUserRecordEntity loggedInUserRecordEntity) {
+        this();
+        this.JWTToken = JWTToken;
+        this.transactionJob = transactionJob;
+        this.hashedTransaction = hashedTransaction;
+        this.loggedInUserRecordEntity = loggedInUserRecordEntity;
+    }
 
     public LoggedInUserRecordTransactionEntity() {
         timestampDateTime = OffsetDateTime.now();
@@ -79,6 +93,14 @@ public class LoggedInUserRecordTransactionEntity implements Serializable {
 
     public void setHashedTransaction(String hashedTransaction) {
         this.hashedTransaction = hashedTransaction;
+    }
+
+    public LoggedInUserRecordEntity getLoggedInUserRecordEntity() {
+        return loggedInUserRecordEntity;
+    }
+
+    public void setLoggedInUserRecordEntity(LoggedInUserRecordEntity loggedInUserRecordEntity) {
+        this.loggedInUserRecordEntity = loggedInUserRecordEntity;
     }
     
     @Override
