@@ -3,6 +3,7 @@ import { DataService } from './../../_services/data.service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProducerService } from './../../_services/producer.service';
 import { Component, OnInit } from '@angular/core';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-create-batch',
@@ -16,8 +17,8 @@ export class CreateBatchComponent implements OnInit {
   retailers: any[] = [];
   createForm: FormGroup;
   packType: any[] = [
-    { value: "Box" },
-    { value: "PlasticBag" }
+    { viewValue: "Box", value: "BOX" },
+    { viewValue: "Plastic Bag", value: "PLASTICBAG" }
   ]
   btnLabel: string;
 
@@ -26,7 +27,8 @@ export class CreateBatchComponent implements OnInit {
   isSameData: boolean;
 
   constructor(private activatedRoute: ActivatedRoute, private producerService: ProducerService,
-    private formBuilder: FormBuilder, private dataService: DataService, private router: Router) { }
+    private formBuilder: FormBuilder, private dataService: DataService, private router: Router,
+    private messageService: MessageService) { }
 
   ngOnInit() {
     this.dataService.changeTitle('');
@@ -42,7 +44,7 @@ export class CreateBatchComponent implements OnInit {
     this.producerService.retrieveAllDistributors().subscribe(
       res => {
         res.forEach(element => {
-          this.distributors.push(element.Id);
+          this.distributors.push({ viewValue: element.company, value: element.Id });
           console.log("dis", this.distributors)
         });
       }
@@ -50,7 +52,7 @@ export class CreateBatchComponent implements OnInit {
     this.producerService.retrieveAllRetailers().subscribe(
       res => {
         res.forEach(element => {
-          this.retailers.push(element.Id);
+          this.retailers.push({ viewValue: element.organisation, value: element.Id });
           console.log("ret", this.retailers)
         });
       }
@@ -123,6 +125,32 @@ export class CreateBatchComponent implements OnInit {
         console.log(splitBatch)
         sessionStorage.setItem('batchInfo', JSON.stringify(splitBatch));
         this.router.navigate(['producer/splitBatch']);
+      } else {
+        let weight, arrLength;
+        let packType = formValues.packType;
+        let dist = formValues.distributor;
+        let ret = formValues.retailer;
+        if (splitType == "Weight") {
+          weight = number;
+          arrLength = this.crop.quantity / number;
+        } else {
+          arrLength = number;
+          weight = this.crop.quantity / number;
+        }
+
+        let dataArr = [];
+        for (let i = 0; i < arrLength; i++) {
+          let data = { "packType": packType, "weight": weight, "unitOfMeasurements": this.crop.unitOfMeasurements, "distributor": dist, "retailer": ret }
+          dataArr.push(data);
+        }
+        console.log("AB")
+        this.producerService.createBatches(dataArr, this.crop.cropId).subscribe(
+          res => {
+            this.router.navigate(["/producer"]);
+          }, err => {
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: err });
+          }
+        )
       }
 
     } else {

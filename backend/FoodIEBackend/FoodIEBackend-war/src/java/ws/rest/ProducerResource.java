@@ -88,7 +88,8 @@ public class ProducerResource {
                             break;
                         }
                         JsonObject jsonObj = (JsonObject) object;
-                        if (jsonObj.get("producer") == null || !jsonObj.get("producer").getAsString().equalsIgnoreCase("resource:org.is4302foodie.Producer#IinFoodSupply")) {
+                        if (jsonObj.get("producer") == null || !jsonObj.get("producer").getAsString().equalsIgnoreCase("resource:org.is4302foodie.Producer#IinFoodSupply")
+                                || jsonObj.get("collects").equals("CONVERTED")) {
                             i.remove();
                         }
                     }
@@ -240,22 +241,21 @@ public class ProducerResource {
 
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
-                System.err.println(jsonArray);
                 JsonObject batchObj = gson.fromJson(jsonArray.get(i), JsonObject.class);
                 String distributor = batchObj.get("distributor").getAsString();
                 String retailer = batchObj.get("retailer").getAsString();;
-                System.err.println(batchObj);
                 batchObj.addProperty("goodId", UUID.randomUUID().toString());
                 batchObj.addProperty("quantity", batchObj.get("weight").getAsString());
                 batchObj.addProperty("hashTransaction", token);
                 batchObj.addProperty("crop", "resource:org.is4302foodie.Crop#" + cropId);
                 batchObj.addProperty("producer", "resource:org.is4302foodie.Producer#" + producer);
-                batchObj.addProperty("distributor", "resource:org.is4302foodie.Distributor#" + distributor);
-                batchObj.addProperty("retailer", "resource:org.is4302foodie.Retailer#" + retailer);
                 batchObj.remove("distributor");
                 batchObj.remove("weight");
                 batchObj.remove("retailer");
-                System.err.println(batchObj);
+                batchObj.addProperty("distributor", "resource:org.is4302foodie.Distributor#" + distributor);
+                batchObj.addProperty("retailer", "resource:org.is4302foodie.Retailer#" + retailer);
+                
+                System.err.println("batch: " + batchObj);
                 OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
                 wr.write(batchObj.toString());
                 wr.flush();

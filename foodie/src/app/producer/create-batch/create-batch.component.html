@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="p-grid p-justify-center">
   <div class="p-col-12 p-align-center cardContainer">
     <p-card styleClass="ui-card-shadow loginCard">
@@ -55,7 +56,7 @@
                 <mat-form-field>
                   <mat-select formControlName="packType" placeholder="Package Type">
                     <mat-option *ngFor="let p of packType" [value]="p.value">
-                      {{p.value}}
+                      {{p.viewValue}}
                     </mat-option>
                   </mat-select>
                   <mat-error *ngIf="createForm.get('packType').hasError('required')">
@@ -67,8 +68,8 @@
                 <mat-form-field>
                   <mat-label>Select Distributor</mat-label>
                   <mat-select placeholder="Distributor" formControlName="distributor">
-                    <mat-option *ngFor="let d of distributors" [value]="d">
-                      {{d}}
+                    <mat-option *ngFor="let d of distributors" [value]="d.value">
+                      {{d.viewValue}}
                     </mat-option>
                   </mat-select>
                   <mat-error *ngIf="createForm.get('distributor').hasError('required')">
@@ -80,8 +81,8 @@
                 <mat-form-field>
                   <mat-label>Select Retailer</mat-label>
                   <mat-select placeholder="Retailer" formControlName="retailer">
-                    <mat-option *ngFor="let r of retailers" [value]="r">
-                      {{r}}
+                    <mat-option *ngFor="let r of retailers" [value]="r.value">
+                      {{r.viewValue}}
                     </mat-option>
                   </mat-select>
                   <mat-error *ngIf="createForm.get('retailer').hasError('required')">
