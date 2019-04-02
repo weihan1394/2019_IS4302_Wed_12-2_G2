@@ -12,6 +12,8 @@ import { Component, OnInit } from '@angular/core';
 export class CreateBatchComponent implements OnInit {
 
   crop;
+  distributors: any[] = [];
+  retailers: any[] = [];
   createForm: FormGroup;
   packType: any[] = [
     { value: "Box" },
@@ -23,8 +25,8 @@ export class CreateBatchComponent implements OnInit {
   // splitType: string;
   isSameData: boolean;
 
-  constructor(private activatedRoute: ActivatedRoute, private producerService: ProducerService, 
-    private formBuilder: FormBuilder, private dataService: DataService, private router:Router) { }
+  constructor(private activatedRoute: ActivatedRoute, private producerService: ProducerService,
+    private formBuilder: FormBuilder, private dataService: DataService, private router: Router) { }
 
   ngOnInit() {
     this.dataService.changeTitle('');
@@ -37,20 +39,34 @@ export class CreateBatchComponent implements OnInit {
         console.error(err);
       }
     );
+    this.producerService.retrieveAllDistributors().subscribe(
+      res => {
+        res.forEach(element => {
+          this.distributors.push(element.Id);
+          console.log("dis", this.distributors)
+        });
+      }
+    )
+    this.producerService.retrieveAllRetailers().subscribe(
+      res => {
+        res.forEach(element => {
+          this.retailers.push(element.Id);
+          console.log("ret", this.retailers)
+        });
+      }
+    )
     this.isSameData = false;
     this.btnLabel = "Next";
     this.createForm = this.formBuilder.group({
-      isSameData: new FormControl(false, {
-        validators: [Validators.required]
-      }),
+      isSameData: new FormControl(false),
       splitType: new FormControl('', {
         validators: [Validators.required]
       }),
       packType: new FormControl(''),
       weightPerPack: new FormControl(''),
       numPacks: new FormControl(''),
-      distributorId: new FormControl(''),
-      retailerId: new FormControl('')
+      distributor: new FormControl(''),
+      retailer: new FormControl('')
     })
 
     this.createForm.get('splitType').valueChanges.subscribe(
@@ -75,13 +91,13 @@ export class CreateBatchComponent implements OnInit {
       value => {
         if (value) {
           this.createForm.get('packType').setValidators([Validators.required]);
-          this.createForm.get('distributorId').setValidators([Validators.required]);
-          this.createForm.get('retailerId').setValidators([Validators.required]);
+          this.createForm.get('distributor').setValidators([Validators.required]);
+          this.createForm.get('retailer').setValidators([Validators.required]);
           this.btnLabel = "Create";
         } else {
           this.createForm.get('packType').clearValidators();
-          this.createForm.get('distributorId').clearValidators();
-          this.createForm.get('retailerId').clearValidators();
+          this.createForm.get('distributor').clearValidators();
+          this.createForm.get('retailer').clearValidators();
           this.btnLabel = "Next";
         }
       })
@@ -96,19 +112,19 @@ export class CreateBatchComponent implements OnInit {
       let formValues = this.createForm.value;
       let isSameData = formValues.isSameData;
       let splitType = formValues.splitType;
-      let number:number;
-      if(splitType == "Weight") {
+      let number: number;
+      if (splitType == "Weight") {
         number = formValues.weightPerPack;
       } else {
         number = formValues.numPacks;
       }
-      if(!isSameData) {
-        let splitBatch = {"crop": this.crop, "splitType": splitType, "number": number};
+      if (!isSameData) {
+        let splitBatch = { "crop": this.crop, "splitType": splitType, "number": number };
         console.log(splitBatch)
         sessionStorage.setItem('batchInfo', JSON.stringify(splitBatch));
         this.router.navigate(['producer/splitBatch']);
       }
-      
+
     } else {
       console.error("error");
       Object.keys(this.createForm.controls).forEach(field => {

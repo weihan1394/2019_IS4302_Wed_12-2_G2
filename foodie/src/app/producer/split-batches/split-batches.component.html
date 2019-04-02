@@ -73,20 +73,20 @@
       </mat-cell>
     </ng-container>
 
-    <ng-container cdkColumnDef="distributorId">
+    <ng-container cdkColumnDef="distributor">
       <mat-header-cell *cdkHeaderCellDef> Distributor </mat-header-cell>
       <mat-cell *cdkCellDef="let row let rowIndex = index" [formGroupName]="rowIndex">
         <mat-form-field>
-          <input matInput formControlName="distributorId">
+          <input matInput formControlName="distributor">
         </mat-form-field>
       </mat-cell>
     </ng-container>
 
-    <ng-container cdkColumnDef="retailerId">
+    <ng-container cdkColumnDef="retailer">
       <mat-header-cell *cdkHeaderCellDef> Retailer </mat-header-cell>
       <mat-cell *cdkCellDef="let row let rowIndex = index" [formGroupName]="rowIndex">
         <mat-form-field>
-          <input matInput formControlName="retailerId">
+          <input matInput formControlName="retailer">
         </mat-form-field>
       </mat-cell>
     </ng-container>

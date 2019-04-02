@@ -65,17 +65,27 @@
               </div>
               <div class="p-col-12" *ngIf="createForm.get('isSameData').value">
                 <mat-form-field>
-                  <input matInput placeholder="Distributor ID" formControlName="distributorId">
-                  <mat-error *ngIf="createForm.get('distributorId').hasError('required')">
-                    Distributor ID is required
+                  <mat-label>Select Distributor</mat-label>
+                  <mat-select placeholder="Distributor" formControlName="distributor">
+                    <mat-option *ngFor="let d of distributors" [value]="d">
+                      {{d}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="createForm.get('distributor').hasError('required')">
+                    Please select an option
                   </mat-error>
                 </mat-form-field>
               </div>
               <div class="p-col-12" *ngIf="createForm.get('isSameData').value">
                 <mat-form-field>
-                  <input matInput placeholder="Retailer ID" formControlName="retailerId">
-                  <mat-error *ngIf="createForm.get('retailerId').hasError('required')">
-                    Retailer ID is required
+                  <mat-label>Select Retailer</mat-label>
+                  <mat-select placeholder="Retailer" formControlName="retailer">
+                    <mat-option *ngFor="let r of retailers" [value]="r">
+                      {{r}}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="createForm.get('retailer').hasError('required')">
+                    Please select an option
                   </mat-error>
                 </mat-form-field>
               </div>

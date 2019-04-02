@@ -16,7 +16,7 @@ export class SplitBatchesComponent implements OnInit {
   createInfo: any;
   batchesForm: FormGroup;
   cols: any[];
-  displayedColumns: string[] = ['packType', 'weight', 'distributorId', 'retailerId'];
+  displayedColumns: string[] = ['packType', 'weight', 'distributor', 'retailer'];
   dataSource = [];
   packType: any[] = [
     { label:'Box', value: "BOX" },
@@ -28,12 +28,12 @@ export class SplitBatchesComponent implements OnInit {
   ngOnInit() {
     // this.cropId = parseInt(this.activatedRoute.snapshot.paramMap.get('id'));
     // this.crop = this.producerService.retrieveCropById(cropId);
-    this.cols = [
-      { field: 'packType', header: 'Pack Type' },
-      { field: 'weight', header: 'Weight' },
-      { field: 'distributorId', header: 'Distributor' },
-      { field: 'retailerId', header: 'Retailer' }
-    ]
+    // this.cols = [
+    //   { field: 'packType', header: 'Pack Type' },
+    //   { field: 'weight', header: 'Weight' },
+    //   { field: 'distributorId', header: 'Distributor' },
+    //   { field: 'retailerId', header: 'Retailer' }
+    // ]
     this.createInfo = JSON.parse(sessionStorage.getItem('batchInfo'))
     this.dataService.changeTitle('');
     this.batchesForm = this.formBuilder.group({
@@ -55,7 +55,7 @@ export class SplitBatchesComponent implements OnInit {
 
     for(let i = 0; i < arrLength; i++) {
       let b = this.batchesForm.get('batch') as FormArray;
-      let data = {"id": i, "packType": "BOX", "weight": weight, "unitOfMeasurements": this.crop.unitOfMeasurements, "distributorId": '', "retailerId": ''}
+      let data = {"id": i, "packType": "BOX", "weight": weight, "unitOfMeasurements": this.crop.unitOfMeasurements, "distributor": '', "retailer": ''}
       b.push(this.createBatch(data));
       this.dataSource.push(data)
     }
@@ -68,8 +68,8 @@ export class SplitBatchesComponent implements OnInit {
       packType: new FormControl(data.packType),
       weight: new FormControl({value: data.weight, disabled: true}),
       unitOfMeasurements: new FormControl({value: this.crop.unitOfMeasurements, disabled: true}),
-      distributorId: new FormControl(data.distributorId),
-      retailerId: new FormControl(data.retailerId)
+      distributor: new FormControl(data.distributor),
+      retailer: new FormControl(data.retailer)
     })
   }
 

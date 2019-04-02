@@ -79,7 +79,7 @@ export class ProducerComponent implements OnInit {
                this.messageService.add({ severity: 'success', summary: 'Success', detail: "Crop status changed!" });
              }
            }, err => {
-             
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: err });
            }
          )
         },

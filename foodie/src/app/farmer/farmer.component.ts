@@ -32,7 +32,7 @@ export class FarmerComponent implements OnInit {
       { field: 'unitOfMeasurements', header: 'Unit' },
       { field: 'harvestedDate', header: 'Date' },
       { field: 'harvestedTime', header: 'Time' },
-      { field: 'producerId', header: 'Producer Id' },
+      { field: 'producer', header: 'Producer' },
       { field: 'collects', header: 'Status' }
     ]
 
@@ -49,7 +49,7 @@ export class FarmerComponent implements OnInit {
   onRowSelect(event) {
     let selectData = event.data;
     console.log(selectData);
-    this.router.navigate(['farmer/editCrop', selectData.ID])
+    // this.router.navigate(['farmer/editCrop', selectData.ID])
   }
 
   switchPage(page) {

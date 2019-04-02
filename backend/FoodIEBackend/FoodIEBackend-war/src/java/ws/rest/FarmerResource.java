@@ -84,6 +84,11 @@ public class FarmerResource {
                         JsonObject obj = (JsonObject) i.next();
                         if (!obj.get("farmer").getAsString().equalsIgnoreCase("resource:org.is4302foodie.Farmer#KokFahTechnologyFarm")) {
                             i.remove();
+                        } else {
+                            String producerId = obj.get("producer").getAsString();
+                            producerId = producerId.substring(producerId.lastIndexOf("#") + 1);
+                            obj.remove("producer");
+                            obj.addProperty("producer", producerId);
                         }
                     }
                     return Response.status(Response.Status.OK).entity(jsonArray.toString()).build();

@@ -227,8 +227,8 @@ public class ProducerResource {
         String cropId = jsonObject.get("cropId").getAsString();
         String token = "abc";
         String producer = "IinFoodSupply";
-        try {
 
+        try {
             int responseCode = 0;
             for (int i = 0; i < jsonArray.size(); i++) {
                 URL url = new URL(baseURL + "org.is4302foodie.ProducerCreateProcessedBatch/");
@@ -242,15 +242,19 @@ public class ProducerResource {
                 conn.setRequestProperty("Content-Type", "application/json");
                 System.err.println(jsonArray);
                 JsonObject batchObj = gson.fromJson(jsonArray.get(i), JsonObject.class);
+                String distributor = batchObj.get("distributor").getAsString();
+                String retailer = batchObj.get("retailer").getAsString();;
                 System.err.println(batchObj);
                 batchObj.addProperty("goodId", UUID.randomUUID().toString());
                 batchObj.addProperty("quantity", batchObj.get("weight").getAsString());
                 batchObj.addProperty("hashTransaction", token);
                 batchObj.addProperty("crop", "resource:org.is4302foodie.Crop#" + cropId);
                 batchObj.addProperty("producer", "resource:org.is4302foodie.Producer#" + producer);
-                batchObj.remove("distributorId");
+                batchObj.addProperty("distributor", "resource:org.is4302foodie.Distributor#" + distributor);
+                batchObj.addProperty("retailer", "resource:org.is4302foodie.Retailer#" + retailer);
+                batchObj.remove("distributor");
                 batchObj.remove("weight");
-                batchObj.remove("retailerId");
+                batchObj.remove("retailer");
                 System.err.println(batchObj);
                 OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
                 wr.write(batchObj.toString());
@@ -321,14 +325,18 @@ public class ProducerResource {
 
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
+
                 jsonObject = new JsonObject();
                 jsonObject.addProperty("$class", "org.is4302foodie.ProducerTransferBatch");
                 jsonObject.addProperty("crop", "resource:org.is4302foodie.Crop#" + cropId);
-                jsonObject.addProperty("producer", "resource:org.is4302foodie.Crop#" + producer);
+                jsonObject.addProperty("producer", "resource:org.is4302foodie.Producer#" + producer);
                 jsonObject.addProperty("hashTransaction", hash);
-                
 
-                conn.connect();
+                OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+                wr.write(jsonObject.toString());
+                wr.flush();
+
+//                conn.connect();
                 int responseCode = conn.getResponseCode();
                 System.err.println(responseCode);
                 if (responseCode == 200) {
@@ -355,6 +363,90 @@ public class ProducerResource {
         } else {
             jsonObject = new JsonObject();
             jsonObject.addProperty("message", "invalid email");
+            return Response.status(Response.Status.EXPECTATION_FAILED).entity(jsonObject.toString()).build();
+        }
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Path(value = "retrieveAllDistributors")
+    public Response retrieveAllDistributors() {
+        // need to check token first
+        JsonObject jsonObject;
+        try {
+            URL url = new URL(baseURL + "org.is4302foodie.Distributor");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            conn.setUseCaches(false);
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Content-Type", "application/json");
+
+            conn.connect();
+            int responseCode = conn.getResponseCode();
+
+            if (responseCode == 200) {
+                InputStream is = conn.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                StringBuilder out = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    out.append(line);
+                }
+                JsonArray jsonArray = gson.fromJson(out.toString(), JsonArray.class);
+                return Response.status(Response.Status.OK).entity(jsonArray.toString()).build();
+            } else {
+                throw new Exception("Error response");
+            }
+
+        } catch (Exception ex) {
+            jsonObject = new JsonObject();
+            jsonObject.addProperty("message", ex.getMessage());
+            return Response.status(Response.Status.EXPECTATION_FAILED).entity(jsonObject.toString()).build();
+        }
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.TEXT_PLAIN)
+    @Path(value = "retrieveAllRetailers")
+    public Response retrieveAllRetailers() {
+        // need to check token first
+        JsonObject jsonObject;
+        try {
+            URL url = new URL(baseURL + "org.is4302foodie.Retailer");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            conn.setUseCaches(false);
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Content-Type", "application/json");
+
+            conn.connect();
+            int responseCode = conn.getResponseCode();
+
+            if (responseCode == 200) {
+                InputStream is = conn.getInputStream();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                StringBuilder out = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    out.append(line);
+                }
+                JsonArray jsonArray = gson.fromJson(out.toString(), JsonArray.class);
+                return Response.status(Response.Status.OK).entity(jsonArray.toString()).build();
+            } else {
+                throw new Exception("Error response");
+            }
+
+        } catch (Exception ex) {
+            jsonObject = new JsonObject();
+            jsonObject.addProperty("message", ex.getMessage());
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(jsonObject.toString()).build();
         }
     }

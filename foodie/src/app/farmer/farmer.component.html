@@ -11,7 +11,9 @@
     <tr [ngClass]="rowIndex % 2 == 0 ? 'evenRow' : null" [pSelectableRow]="rowData">
       <td *ngFor="let col of columns">
         <span class="ui-column-title">{{col.header}}</span>
-        {{rowData[col.field]}}
+        <p *ngIf="col.header != 'Date' && col.header != 'Time'">{{rowData[col.field]}}</p>
+        <p *ngIf="col.header == 'Date' && col.header != 'Time'">{{rowData[col.field] | date:'shortDate'}}</p>
+        <p *ngIf="col.header != 'Date' && col.header == 'Time'">{{rowData[col.field] | date:'shortTime'}}</p>
       </td>
     </tr>
   </ng-template>
