@@ -1,3 +1,4 @@
+import { ViewBatchDetailsComponent } from './view-batch-details/view-batch-details.component';
 import { AuthGuard } from './../_guards/auth-guard';
 import { LayoutComponent } from './../layout/layout.component';
 import { NgModule } from '@angular/core';
@@ -8,6 +9,7 @@ const routes: Routes = [
   {
     path: '', component: LayoutComponent, canActivate: [AuthGuard], canActivateChild: [AuthGuard], children: [
       { path: 'retailer', component: RetailerComponent },
+      { path: 'retailer/viewBatchDetails/:id', component: ViewBatchDetailsComponent },
     ]
   }
 ];

@@ -20,15 +20,15 @@ export class ProducerService {
     return throwError(error);
   }
 
-  retrieveCrops(email: string) {
-    return this.httpClient.get<any>(this.baseUrl + "retrieveCropsByProducer?email=" + email).pipe(
+  retrieveCrops() {
+    return this.httpClient.get<any>(this.baseUrl + "retrieveCropsByProducer").pipe(
       tap(data => { console.log(data) }),
       catchError(this.handleError)
     )
   }
 
-  retrieveProcessed(email: string): Observable<any> {
-    return this.httpClient.get<any>(this.baseUrl + "retrieveFinishedByProducer?email=" + email).pipe(
+  retrieveProcessed(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "retrieveFinishedByProducer").pipe(
       tap(data => { console.log(data) }),
       catchError(this.handleError)
     )

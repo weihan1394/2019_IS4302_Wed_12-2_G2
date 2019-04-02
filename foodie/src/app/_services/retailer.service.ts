@@ -1,19 +1,38 @@
+import { tap, catchError } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 @Injectable({
   providedIn: 'root'
 })
 export class RetailerService {
-  foods: any[] = [
-    { ID: '1', Name: 'Corn', Weight: '500g', Date: moment('23/3/2019', "DD-MM-YYYY").format("DD-MM-YYYY"), Time: moment('08:00', "hh:mm").format("hh:mm") },
-    { ID: '2', Name: 'Carrot', Weight: '200g', Date: moment('20/3/2019', "DD-MM-YYYY").format("DD-MM-YYYY"), Time: moment('14:00', "hh:mm").format("hh:mm") },
-    { ID: '3', Name: 'Cabbage', Weight: '1000g', Date: moment('1/3/2019', "DD-MM-YYYY").format("DD-MM-YYYY"), Time: moment('15:00', "hh:mm").format("hh:mm") },
-    { ID: '4', Name: 'Lettuce', Weight: '800g', Date: moment('8/3/2019', "DD-MM-YYYY").format("DD-MM-YYYY"), Time: moment('12:00', "hh:mm").format("hh:mm") },
-    { ID: '5', Name: 'Potato', Weight: '300g', Date: moment('6/3/2019', "DD-MM-YYYY").format("DD-MM-YYYY"), Time: moment('09:00', "hh:mm").format("hh:mm") }
-  ];
-  constructor() { }
+  baseUrl = "/api/retailer/";
 
-  retrieveFoods() {
-    return this.foods;
+  constructor(private httpClient: HttpClient) { }
+
+  retrieveGoods(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "retrieveGoods").pipe(
+      tap(data => { console.log(data) }),
+      catchError(this.handleError)
+    )
+  }
+
+  collectBatch(batchId): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "collectBatch?batchId=" + batchId).pipe(
+      tap(data => { console.log(data) }),
+      catchError(this.handleError)
+    )
+  }
+
+  retrieveBatchById(batchId): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + "retrieveBatchById?batchId=" + batchId).pipe(
+      tap(data => { console.log(data) }),
+      catchError(this.handleError)
+    )
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    return throwError(error);
   }
 }

@@ -1,3 +1,4 @@
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { RetailerService } from './../_services/retailer.service';
 import { DataService } from './../_services/data.service';
@@ -11,26 +12,36 @@ import { Component, OnInit } from '@angular/core';
 export class RetailerComponent implements OnInit {
 
   cols: any[];
-  foods: Array<any>;
-  constructor(private dataService:DataService, private retailerService:RetailerService, private router:Router) { }
+  goods: Array<any>;
+
+  constructor(private retailerService: RetailerService, private router: Router, private dataService: DataService) { }
 
   ngOnInit() {
-    this.dataService.changeTitle("View Items");
-
+    this.dataService.changeTitle("View Goods");
     this.cols = [
-      { field: 'ID', header: 'ID' },
-      { field: 'Name', header: 'Name' },
-      { field: 'Weight', header: 'Weight' },
-      { field: 'Date', header: 'Date' },
-      { field: 'Time', header: 'Time' }
+      { field: 'goodId', header: 'ID' },
+      { field: 'packType', header: 'Pack Type' },
+      { field: 'quantity', header: 'Weight' },
+      { field: 'unitOfMeasurements', header: 'Unit' },
+      { field: 'processedDate', header: 'Processed Date' },
+      // { field: 'processedTime', header: 'Processed Time' },
+      // { field: 'deliveryDate', header: 'Delivery Date' },
+      // { field: 'deliveryTime', header: 'Delivery Time'},
+      { field: 'status', header: 'Status' },
+      { field: 'distributor', header: 'Distributor' }
     ]
-
-    this.foods = this.retailerService.retrieveFoods();
+    this.retailerService.retrieveGoods().subscribe(
+      res => {
+        this.goods = res;
+      }, err => {
+        console.error(err);
+      }
+    );
   }
 
   onRowSelect(event) {
     let selectData = event.data;
-    console.log(selectData);
-    // this.router.navigate(['farmer/editCrop', selectData.ID])
+    this.router.navigate(['/retailer/viewBatchDetails/' + selectData.goodId])
+
   }
 }

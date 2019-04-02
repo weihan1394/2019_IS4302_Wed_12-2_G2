@@ -9,9 +9,10 @@ import { CommonModule } from '@angular/common';
 import { RetailerRoutingModule } from './retailer-routing.module';
 import { RetailerComponent } from './retailer.component';
 import { RetailerService } from '../_services/retailer.service';
+import { ViewBatchDetailsComponent } from './view-batch-details/view-batch-details.component';
 
 @NgModule({
-  declarations: [RetailerComponent],
+  declarations: [RetailerComponent, ViewBatchDetailsComponent],
   imports: [
     CommonModule,
     SharedModule.forRoot(),

@@ -19,25 +19,19 @@ export class CreateCropComponent implements OnInit {
     { value: "L" },
     { value: "ML" }
   ]
-  hours = [];
-  minutes = [];
+  producers: any[] = [];
   constructor(private farmerService: FarmerService, private formBuilder: FormBuilder, private dataService: DataService,
     private messageService: MessageService, private router:Router) { }
 
   ngOnInit() {
-    for (let i = 0; i < 24; i++) {
-      if (i < 10)
-        this.hours.push("0" + i);
-      else
-        this.hours.push(i);
-    }
-    for (let i = 0; i < 61; i++) {
-      if (i < 10)
-        this.minutes.push("0" + i);
-      else
-        this.minutes.push(i);
-    }
     this.dataService.changeTitle('');
+    this.farmerService.retrieveAllProducers().subscribe(
+      res => {
+        res.forEach(element => {
+          this.producers.push({ viewValue: element.name, value: element.Id });
+        });
+      }
+    )
     this.createForm = this.formBuilder.group({
       name: new FormControl('', {
         validators: [Validators.required]
@@ -48,16 +42,7 @@ export class CreateCropComponent implements OnInit {
       unit: new FormControl('', {
         validators: [Validators.required]
       }),
-      // date: new FormControl('', {
-      //   validators: [Validators.required]
-      // }),
-      // hours: new FormControl('', {
-      //   validators: [Validators.required]
-      // }),
-      // minutes: new FormControl('', {
-      //   validators: [Validators.required]
-      // }),
-      producerId: new FormControl('', {
+      producer: new FormControl('', {
         validators: [Validators.required]
       })
     })
@@ -69,9 +54,7 @@ export class CreateCropComponent implements OnInit {
       let name = formValues.name;
       let weight = formValues.weight;
       let unit = formValues.unit;
-      let producer = formValues.producerId;
-      // let date = formValues.date;
-      // let time = formValues.hours + " " + formValues.minutes;
+      let producer = formValues.producer;
       this.farmerService.createCrop(name, weight, unit, producer).subscribe(
         res => {
           this.messageService.add({ severity: 'info', summary: 'Success', detail: "Crop created!" });

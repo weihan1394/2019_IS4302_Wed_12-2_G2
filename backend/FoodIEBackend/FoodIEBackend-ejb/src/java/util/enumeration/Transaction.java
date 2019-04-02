@@ -1,9 +1,9 @@
 package util.enumeration;
 
 public enum Transaction {
-    TEST,
-    CREATECROP,
-    EditCrops,
-    RetrieveCrops,
-    DeleteCrops
+    CREATE_CROP,
+    COLLECT_CROP,
+    CREATE_BATCHES,
+    COlLECT_BATCH,
+    CONFIRM_COLLECTION,
 }

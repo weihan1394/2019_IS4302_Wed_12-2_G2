@@ -7,7 +7,7 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: '', component: LayoutComponent, canActivate: [AuthGuard], canActivateChild: [AuthGuard], children: [
-      { path: 'farmer', component: DistributorComponent }
+      { path: 'distributor', component: DistributorComponent }
     ]
   }
 ];

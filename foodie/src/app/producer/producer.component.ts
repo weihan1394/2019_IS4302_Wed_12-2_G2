@@ -21,7 +21,6 @@ export class ProducerComponent implements OnInit {
     private dataService: DataService, private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
-    let currentUser: User = JSON.parse(localStorage.getItem("currentUser"));
     this.dataService.changeTitle("View Crops & Processed Items");
     this.colsCrops = [
       { field: 'cropId', header: 'ID' },
@@ -45,14 +44,14 @@ export class ProducerComponent implements OnInit {
       { field: 'sourceOwner', header: 'Farmer' }
     ]
 
-    this.producerService.retrieveCrops(currentUser.email).subscribe(
+    this.producerService.retrieveCrops().subscribe(
       res => {
         this.crops = res;
       }, err => {
         console.error(err);
       }
     );
-    this.producerService.retrieveProcessed(currentUser.email).subscribe(
+    this.producerService.retrieveProcessed().subscribe(
       res => {
         this.processed = res;
       }, err => {

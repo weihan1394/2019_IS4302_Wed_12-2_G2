@@ -1,0 +1,96 @@
+<p-toast></p-toast>
+<div class="p-grid p-justify-center">
+  <div class="p-col-12 p-align-center cardContainer">
+    <p-card styleClass="ui-card-shadow loginCard">
+      <p-header>
+        <h1 class="cardHeader">View Details</h1>
+      </p-header>
+      <div class="p-grid" *ngIf="batch">
+        <div class="p-col-6 ">
+          <h4 class="labels">ID</h4>
+        </div>
+        <div class="p-col-6">
+          <h4>{{batch.goodId}}</h4>
+        </div>
+        <div class="p-col-6 ">
+          <h4 class="labels">Pack Type</h4>
+        </div>
+        <div class="p-col-6">
+          <h4>{{batch.packType}}</h4>
+        </div>
+        <div class="p-col-6 ">
+          <h4 class="labels">Weight</h4>
+        </div>
+        <div class="p-col-6">
+          <h4>{{batch.quantity}}</h4>
+        </div>
+        <div class="p-col-6 ">
+          <h4 class="labels">Unit</h4>
+        </div>
+        <div class="p-col-6">
+          <h4>{{batch.unitOfMeasurements}}</h4>
+        </div>
+        <div class="p-col-6 ">
+          <h4 class="labels">Processed Date</h4>
+        </div>
+        <div class="p-col-6">
+          <h4>{{batch.processedDate | date:"shortDate"}}</h4>
+        </div>
+        <div class="p-col-6 ">
+          <h4 class="labels">Processed Time</h4>
+        </div>
+        <div class="p-col-6">
+          <h4>{{batch.processedTime | date:"shortTime"}}</h4>
+        </div>
+        <div class="p-col-6" *ngIf="batch.status == 'DELIVERED'">
+          <h4 class="labels">Delivered Date</h4>
+        </div>
+        <div class="p-col-6" *ngIf="batch.status == 'DELIVERED'">
+          <h4>{{batch.deliveredDate | date:"shortDate"}}</h4>
+        </div>
+        <div class="p-col-6" *ngIf="batch.status == 'DELIVERED'">
+          <h4 class="labels">Delivered Time</h4>
+        </div>
+        <div class="p-col-6" *ngIf="batch.status == 'DELIVERED'">
+          <h4>{{batch.deliveredTime | date:"shortTime"}}</h4>
+        </div>
+        <div class="p-col-6 ">
+          <h4 class="labels">Status</h4>
+        </div>
+        <div class="p-col-6">
+          <h4>{{batch.status}}</h4>
+        </div>
+        <div class="p-col-6 ">
+          <h4 class="labels">Farmer</h4>
+        </div>
+        <div class="p-col-6">
+          <h4>{{batch.sourceOwner}}</h4>
+        </div>
+        <div class="p-col-6 ">
+          <h4 class="labels">Producer</h4>
+        </div>
+        <div class="p-col-6">
+          <h4>{{batch.producer}}</h4>
+        </div>
+        <div class="p-col-6 ">
+          <h4 class="labels">Distributor</h4>
+        </div>
+        <div class="p-col-6">
+          <h4>{{batch.distributor}}</h4>
+        </div>
+        <div class="p-col-6 ">
+          <h4 class="labels">Retailer</h4>
+        </div>
+        <div class="p-col-6">
+          <h4>{{batch.retailer}}</h4>
+        </div>
+        <div class="p-col-12 p-justify-between btnContainer" *ngIf="batch.status == 'DELIVERING'">
+          <button id="submitBtn" (click)="collectGood()" pButton type="submit" class="ui-button-info ui-button-raised" label="Collect"></button>
+        </div>
+
+      </div>
+    </p-card>
+  </div>
+</div>
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
