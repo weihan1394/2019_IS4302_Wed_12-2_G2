@@ -78,17 +78,21 @@ public class SecurityFilter implements Filter {
                     while (headerNames.hasMoreElements()) {
                         String key = (String) headerNames.nextElement();
                         String value = httpRequest.getHeader(key);
+                        System.out.println(key);
                         headerMap.put(key, value);
                     }
                 }
 
                 // check if the api put bearer at header
-                if (headerMap.containsKey("bearer")) {
+                if (headerMap.containsKey("authorization")) {
                     // check the JWT token
-                    String JWT = headerMap.get("bearer");
+                    String JWT = headerMap.get("authorization");
+                    String []splitJWT = JWT.split(" ");
+                    JWT = splitJWT[1];
                     System.out.println("*** " + JWT);
 
                     try {
+                        System.err.println(JWT);
                         Claims claims = jWTManager.decodeJWT(JWT);
                         claims.getExpiration();
 

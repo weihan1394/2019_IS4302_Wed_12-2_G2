@@ -7,5 +7,7 @@ import javax.ejb.Local;
 public interface LoggedInUserRecordTransactionEntityControllerLocal {
 
     public LoggedInUserRecordTransactionEntity createNewLoggedInUserRecordTransactionEntity(LoggedInUserRecordTransactionEntity newLoggedInUserRecordTransactionEntity);
+
+    public void updateTransactionStatus(LoggedInUserRecordTransactionEntity loggedInUserRecordTransactionEntity);
     
 }

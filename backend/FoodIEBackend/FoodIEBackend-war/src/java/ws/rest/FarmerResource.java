@@ -37,6 +37,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import util.enumeration.Transaction;
+import util.enumeration.TransactionStatus;
 import util.exception.UserActorNotFoundException;
 import util.inject.LookupController;
 import util.library.HttpParse;
@@ -50,20 +51,20 @@ public class FarmerResource {
 
     @Inject
     private HttpServletRequest request;
-    
+
     private final LookupController lookupController;
-    
+
     private final HashHelper hashHelper;
 
     private final ActorUserControllerLocal actorUserControllerLocal;
-    
+
     private final LoggedInUserRecordEntityControllerLocal loggedInUserRecordEntityControllerLocal;
-    
+
     private final LoggedInUserRecordTransactionEntityControllerLocal loggedInUserRecordTransactionEntityControllerLocal;
-    
+
     private String companyId;
 
-    private HttpParse httpParse;
+    private final HttpParse httpParse;
 
     private final Gson gson;
     ServletRequest servletRequest;
@@ -84,39 +85,21 @@ public class FarmerResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path(value = "HelloWorld")
-    public String HelloWorld()  throws UserActorNotFoundException, NoSuchAlgorithmException {
+    public String HelloWorld() throws UserActorNotFoundException, NoSuchAlgorithmException {
         List<String> lsName = new ArrayList<>();
         lsName.add("test1");
         lsName.add("test2");
         lsName.add("test3");
 
         String jsonStr = gson.toJson(lsName);
-        
-        
-        // Pass the HttpServletRequest to util.httpParse.getActorUserJWTByHttpServletRequest to parse to get back the actorUserJWT
-        ActorUserJWT actorUserJWT = getHeaderActorUserJWTObject();
-        System.out.println(actorUserJWT.getEmail() + "-" + actorUserJWT.getFirstName() + "-" + actorUserJWT.getLastName() + "-" + actorUserJWT.getRole());
-        
-        ActorUserEntity actorUserEntity = actorUserControllerLocal.retrieveActorUserByEmail(actorUserJWT.getEmail());
-        System.out.println(actorUserEntity.getCompany().getEmail());
-        companyId = actorUserEntity.getCompany().getEmail();
-        
-        System.out.println("1");
-        // store user transaction
-        String hashedTransaction = HashHelper.hashString(jsonStr);
-        System.out.println("2");
-        //     public LoggedInUserRecordTransactionEntity(String JWTToken, Transaction transactionJob, String hashedTransaction, LoggedInUserRecordEntity loggedInUserRecordEntity) {
-        String JWTToken = getHeaderJWTToken();
-        System.out.println("3_"+JWTToken);
-        LoggedInUserRecordEntity loggedInUserRecordEntity = loggedInUserRecordEntityControllerLocal.retrieveLoggedInUserByJWT(JWTToken);
-        System.out.println("4");
-        LoggedInUserRecordTransactionEntity loggedInUserRecordTransactionEntity = new LoggedInUserRecordTransactionEntity(JWTToken, Transaction.CREATECROP, hashedTransaction, loggedInUserRecordEntity);
-        System.out.println("5");
-        loggedInUserRecordTransactionEntityControllerLocal.createNewLoggedInUserRecordTransactionEntity(loggedInUserRecordTransactionEntity);
-        System.out.println("6");
-        
-        System.out.println("hash: " + hashedTransaction);
-        
+        List<Object> lsReturn = httpParse.getReturnObject(request, jsonStr, Transaction.CREATECROP);
+        String companyId = lsReturn.get(1).toString();
+        LoggedInUserRecordTransactionEntity loggedInUserRecordTransactionEntity = (LoggedInUserRecordTransactionEntity) lsReturn.get(0);
+
+        System.out.println("yes:" + companyId);
+        loggedInUserRecordTransactionEntity.setOutcomeTransaction(TransactionStatus.PASS);
+        loggedInUserRecordTransactionEntityControllerLocal.updateTransactionStatus(loggedInUserRecordTransactionEntity);
+
         return jsonStr;
     }
 
@@ -126,6 +109,7 @@ public class FarmerResource {
     @Path(value = "retrieveCropsByFarmer")
     public Response retrieveCropsByFarmer(@QueryParam("email") String email) {
         // need to check token first
+        String companyId = httpParse.getCompanyId(request);
         JsonObject jsonObject;
         if (email != null) {
             try {
@@ -154,7 +138,7 @@ public class FarmerResource {
                     Iterator i = jsonArray.iterator();
                     while (i.hasNext()) {
                         JsonObject obj = (JsonObject) i.next();
-                        if (!obj.get("farmer").getAsString().equalsIgnoreCase("resource:org.is4302foodie.Farmer#KokFahTechnologyFarm")) {
+                        if (!obj.get("farmer").getAsString().equalsIgnoreCase("resource:org.is4302foodie.Farmer#" + companyId)) {
                             i.remove();
                         } else {
                             String producerId = obj.get("producer").getAsString();
@@ -188,14 +172,19 @@ public class FarmerResource {
         JsonObject jsonObject = gson.fromJson(createCropsReq, JsonObject.class);
         System.out.println(jsonObject);
 
+        List<Object> lsReturn = httpParse.getReturnObject(request, createCropsReq, Transaction.CREATECROP);
+        String companyId = lsReturn.get(1).toString();
+        String hash = lsReturn.get(2).toString();
+        System.err.println(companyId);
+        LoggedInUserRecordTransactionEntity loggedInUserRecordTransactionEntity = (LoggedInUserRecordTransactionEntity) lsReturn.get(0);
+
         String cropId = UUID.randomUUID().toString();
-        String token = "abc";
         String producer = jsonObject.get("producer").getAsString();
         jsonObject.addProperty("$class", "org.is4302foodie.FarmerCreateBatch");
         jsonObject.addProperty("cropId", cropId);
         jsonObject.addProperty("collects", "NOT_YET_COLLECTED");
-        jsonObject.addProperty("hashTransaction", token);
-        jsonObject.addProperty("farmer", "resource:org.is4302foodie.Farmer#KokFahTechnologyFarm");
+        jsonObject.addProperty("hashTransaction", hash);
+        jsonObject.addProperty("farmer", "resource:org.is4302foodie.Farmer#" + companyId);
         jsonObject.remove("producer");
         jsonObject.addProperty("producer", "resource:org.is4302foodie.Producer#" + producer);
 
@@ -220,6 +209,8 @@ public class FarmerResource {
             int responseCode = conn.getResponseCode();
 
             System.err.println(responseCode);
+            loggedInUserRecordTransactionEntity.setOutcomeTransaction(TransactionStatus.PASS);
+            loggedInUserRecordTransactionEntityControllerLocal.updateTransactionStatus(loggedInUserRecordTransactionEntity);
             if (responseCode == 200) {
 //                InputStream is = conn.getInputStream();
 //                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
@@ -245,18 +236,5 @@ public class FarmerResource {
             return Response.status(Response.Status.EXPECTATION_FAILED).entity(jsonObject.toString()).build();
             // weihan: update transaction entity to say fail
         }
-    }
-    
-    private ActorUserJWT getHeaderActorUserJWTObject() {
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        ActorUserJWT actorUserJWT = httpParse.getActorUserJWTByHttpServletRequest(httpRequest);
-        
-        return actorUserJWT;
-    }
-    
-    // get jwt back
-    private String getHeaderJWTToken() {
-        HttpServletRequest httpRequest = (HttpServletRequest)request;
-        return httpParse.getJWTByHttpServletRequest(httpRequest);
     }
 }

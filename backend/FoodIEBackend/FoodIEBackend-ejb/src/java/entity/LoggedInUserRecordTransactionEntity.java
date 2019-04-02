@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import util.enumeration.TransactionStatus;
 import util.enumeration.Transaction;
 
 @Entity
@@ -31,11 +32,14 @@ public class LoggedInUserRecordTransactionEntity implements Serializable {
     
     @Enumerated(EnumType.STRING)
     private Transaction transactionJob;
+    
+    @Enumerated(EnumType.STRING)
+    private TransactionStatus outcomeTransaction;
 
     @Column
     private OffsetDateTime timestampDateTime;
     
-    @Column(columnDefinition = "CHAR(128)")
+    @Column(columnDefinition = "CHAR(255)")
     private String hashedTransaction;
     
     @ManyToOne
@@ -73,6 +77,14 @@ public class LoggedInUserRecordTransactionEntity implements Serializable {
 
     public Transaction getTransactionJob() {
         return transactionJob;
+    }
+
+    public TransactionStatus getOutcomeTransaction() {
+        return outcomeTransaction;
+    }
+
+    public void setOutcomeTransaction(TransactionStatus outcomeTransaction) {
+        this.outcomeTransaction = outcomeTransaction;
     }
 
     public void setTransactionJob(Transaction transactionJob) {
