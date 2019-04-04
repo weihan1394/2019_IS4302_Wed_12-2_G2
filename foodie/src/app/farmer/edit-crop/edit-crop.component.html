@@ -1,0 +1,67 @@
+<div class="p-grid p-justify-center loginDiv">
+  <div class="p-col-12 p-align-center cardContainer">
+    <p-card styleClass="ui-card-shadow loginCard">
+      <p-header>
+        <h1 class="cardHeader">Edit Crop</h1>
+      </p-header>
+      <div class="p-grid">
+        <div class="p-col-12">
+          <form class="editForm" [formGroup]="editForm" (ngSubmit)="onSubmit()">
+            <div class="p-grid">
+              <div class="p-col-12">
+                <mat-form-field>
+                  <input matInput placeholder="Name" formControlName="name">
+                  <mat-error *ngIf="editForm.get('name').hasError('required')">
+                    Name is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="p-col-12">
+                <mat-form-field class="weightFormField">
+                  <input matInput placeholder="Weight" formControlName="weight">
+                  <mat-error *ngIf="editForm.get('weight').hasError('required')">
+                    Weight is required
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="unitFormField">
+                  <mat-select [(value)]="unitSelected">
+                    <mat-option *ngFor="let unit of units" [value]="unit.value">
+                      {{unit.value}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+              </div>
+              <div class="p-col-12">
+                <mat-form-field>
+                  <input matInput [matDatepicker]="myDatepicker" formControlName="date">
+                  <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+                  <mat-datepicker #myDatepicker></mat-datepicker>
+                  <!-- <input matInput placeholder="Date" formControlName="date">
+                  <mat-error *ngIf="editForm.get('date').hasError('required')">
+                    Date is required
+                  </mat-error> -->
+                </mat-form-field>
+              </div>
+              <div class="p-col-12">
+                <mat-form-field>
+                  <input matInput placeholder="Time" formControlName="time">
+                  <mat-error *ngIf="editForm.get('time').hasError('required')">
+                    Time is required
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="p-col-12 p-justify-between btnContainer">
+                    <!-- <button id="backBtn" (click)="back()" pButton type="button" class="ui-button-danger ui-button-raised"
+                      label="Back"></button> -->
+                    <button id="submitBtn" pButton type="submit" class="ui-button-info ui-button-raised"
+                      label="Update"></button>
+                <!-- <button mat-stroked-button color="primary" type="submit" [disabled]="!loginForm.valid">Login</button> -->
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </p-card>
+  </div>
+</div>

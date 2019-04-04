@@ -1,0 +1,54 @@
+<p-toast></p-toast>
+<h2 class="title">Crops</h2>
+<p-table [columns]="colsCrops" [value]="crops" [responsive]="true" (onRowSelect)="onCropRowSelect($event)" selectionMode="single"
+  [paginator]="true" [rows]="5">
+  <ng-template pTemplate="header" let-columns>
+    <tr class="headerRow">
+      <th *ngFor="let col of columns">
+        {{col.header}}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+    <tr [pSelectableRow]="rowData">
+      <td *ngFor="let col of columns">
+        <span class="ui-column-title">{{col.header}}</span>
+        <p *ngIf="col.header == 'Date'">{{rowData[col.field] | date:'shortDate'}}</p>
+        <p *ngIf="col.header != 'Date'">{{rowData[col.field]}}</p>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="summary" let-rowData>
+    <div style="text-align:left">
+      <!-- <button type="button" pButton icon="pi pi-plus" label="Add" (click)="switchPage('farmer/createCrop')"></button> -->
+    </div>
+  </ng-template>
+</p-table>
+
+<h2 class="title">Processed</h2>
+<p-table [columns]="colsProcessed" [value]="processed" [responsive]="true" (onRowSelect)="onProcessedRowSelect($event)" selectionMode="single"
+  [paginator]="true" [rows]="5">
+  <ng-template pTemplate="header" let-columns>
+    <tr class="headerRow">
+      <th *ngFor="let col of columns">
+        {{col.header}}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+    <tr [pSelectableRow]="rowData">
+      <td *ngFor="let col of columns">
+        <span class="ui-column-title">{{col.header}}</span>
+        <p *ngIf="col.field == 'processedDate'" >{{rowData[col.field] | date:'shortDate'}}</p>
+        <p *ngIf="col.field != 'processedDate'" >{{rowData[col.field]}}</p>
+      </td>
+    </tr>
+  </ng-template>
+  <!-- <ng-template pTemplate="summary" let-rowData>
+    <div style="text-align:left">
+      <button type="button" pButton icon="pi pi-plus" label="Add" (click)="switchPage('producer/createProcessed')"></button>
+    </div>
+  </ng-template> -->
+</p-table>
+
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>

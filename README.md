@@ -36,7 +36,10 @@ Backend
 - Once deploy can created the particpate we than can do the transactions following the json file that is provided.
 
 ### 2. AngularJs
-- 
+- Use the command "npm install" to install the required packages
+- Edit "proxy-conf.json" file. Change the port number to the port number running on ExpressJs
+- To run with proxy: "npm start"
+- Go to localhost:4200
 
 ### 3. JavaEE and Web Application
 - Setup with JWT security token

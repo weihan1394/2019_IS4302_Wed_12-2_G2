@@ -1,0 +1,25 @@
+<p-table [columns]="cols" [value]="crops" [responsive]="true" (onRowSelect)="onRowSelect($event)" selectionMode="single"
+  [paginator]="true" [rows]="15">
+  <ng-template pTemplate="header" let-columns>
+    <tr class="headerRow">
+      <th *ngFor="let col of columns">
+        {{col.header}}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+    <tr [ngClass]="rowIndex % 2 == 0 ? 'evenRow' : null" [pSelectableRow]="rowData">
+      <td *ngFor="let col of columns">
+        <span class="ui-column-title">{{col.header}}</span>
+        <p *ngIf="col.header != 'Date' && col.header != 'Time'">{{rowData[col.field]}}</p>
+        <p *ngIf="col.header == 'Date' && col.header != 'Time'">{{rowData[col.field] | date:'shortDate'}}</p>
+        <p *ngIf="col.header != 'Date' && col.header == 'Time'">{{rowData[col.field] | date:'shortTime'}}</p>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="summary" let-rowData>
+    <div style="text-align:left">
+      <button type="button" pButton icon="pi pi-plus" label="Add" (click)="switchPage('farmer/createCrop')"></button>
+    </div>
+  </ng-template>
+</p-table>

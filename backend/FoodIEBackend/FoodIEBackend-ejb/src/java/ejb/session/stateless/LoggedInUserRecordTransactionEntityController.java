@@ -21,4 +21,9 @@ public class LoggedInUserRecordTransactionEntityController implements LoggedInUs
         
         return newLoggedInUserRecordTransactionEntity;
     }
+    
+    @Override
+    public void updateTransactionStatus(LoggedInUserRecordTransactionEntity loggedInUserRecordTransactionEntity) {
+        em.merge(loggedInUserRecordTransactionEntity);
+    }
 }

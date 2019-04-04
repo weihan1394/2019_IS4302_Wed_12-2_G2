@@ -7,7 +7,7 @@ SerinFarmVegetables1
   "farmingActivity": "Farm Vegetables",
   "Id": "KokFahTechnologyFarm",
   "name": "Kok Fah Technology Farm",
-  "emailAddress": "KohFT@foodie.com",
+  "userName": "KohFT@foodie.com",
   "address": {
     "$class": "org.is4302foodie.Address",
     "street": "Pasir ris",
@@ -26,7 +26,7 @@ FirstClassHanWeiProducer1
   "category": "FROZENFOOD",
   "Id": "IinFoodSupply",
   "name": "Iin Food Supply",
-  "emailAddress": "LinFS@foodie.com",
+  "userName": "LinFS@foodie.com",
   "address": {
     "$class": "org.is4302foodie.Address",
     "street": "Serangoon",
@@ -46,7 +46,7 @@ WeiHanPteLtdDistributor1
   "company": "Wei Han PTE LTD",
   "Id": "WalsonFoodDistributorPteLtd",
   "name": "Walson Food Distributor Pte Ltd",
-  "emailAddress": "Walson@foodie.com",
+  "userName": "Walson@foodie.com",
   "address": {
     "$class": "org.is4302foodie.Address",
     "street": "Serangoon North",
@@ -66,7 +66,7 @@ WeiHannyNUSRetailer1
   "organisation": "NUS",
   "Id": "NTUCFairPrice",
   "name": "NTUC FairPrice",
-  "emailAddress": "Ntuc@foodie.com",
+  "userName": "Ntuc@foodie.com",
   "address": {
     "$class": "org.is4302foodie.Address",
     "street": "Ang Mo Kio",

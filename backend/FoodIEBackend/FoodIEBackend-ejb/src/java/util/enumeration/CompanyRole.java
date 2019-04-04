@@ -1,6 +1,6 @@
 package util.enumeration;
 
-public enum UserRole {
+public enum CompanyRole {
     FARMER,
     PRODUCER,
     DISTRIBUTOR,

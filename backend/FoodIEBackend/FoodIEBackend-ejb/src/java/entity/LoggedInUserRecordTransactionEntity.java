@@ -15,6 +15,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import util.enumeration.TransactionStatus;
 import util.enumeration.Transaction;
 
 @Entity
@@ -30,12 +32,28 @@ public class LoggedInUserRecordTransactionEntity implements Serializable {
     
     @Enumerated(EnumType.STRING)
     private Transaction transactionJob;
+    
+    @Enumerated(EnumType.STRING)
+    private TransactionStatus outcomeTransaction;
 
     @Column
     private OffsetDateTime timestampDateTime;
     
-    @Column(columnDefinition = "CHAR(128)")
+    @Column(columnDefinition = "CHAR(255)")
     private String hashedTransaction;
+    
+    @ManyToOne
+    private LoggedInUserRecordEntity loggedInUserRecordEntity;
+    
+    
+
+    public LoggedInUserRecordTransactionEntity(String JWTToken, Transaction transactionJob, String hashedTransaction, LoggedInUserRecordEntity loggedInUserRecordEntity) {
+        this();
+        this.JWTToken = JWTToken;
+        this.transactionJob = transactionJob;
+        this.hashedTransaction = hashedTransaction;
+        this.loggedInUserRecordEntity = loggedInUserRecordEntity;
+    }
 
     public LoggedInUserRecordTransactionEntity() {
         timestampDateTime = OffsetDateTime.now();
@@ -61,6 +79,14 @@ public class LoggedInUserRecordTransactionEntity implements Serializable {
         return transactionJob;
     }
 
+    public TransactionStatus getOutcomeTransaction() {
+        return outcomeTransaction;
+    }
+
+    public void setOutcomeTransaction(TransactionStatus outcomeTransaction) {
+        this.outcomeTransaction = outcomeTransaction;
+    }
+
     public void setTransactionJob(Transaction transactionJob) {
         this.transactionJob = transactionJob;
     }
@@ -79,6 +105,14 @@ public class LoggedInUserRecordTransactionEntity implements Serializable {
 
     public void setHashedTransaction(String hashedTransaction) {
         this.hashedTransaction = hashedTransaction;
+    }
+
+    public LoggedInUserRecordEntity getLoggedInUserRecordEntity() {
+        return loggedInUserRecordEntity;
+    }
+
+    public void setLoggedInUserRecordEntity(LoggedInUserRecordEntity loggedInUserRecordEntity) {
+        this.loggedInUserRecordEntity = loggedInUserRecordEntity;
     }
     
     @Override

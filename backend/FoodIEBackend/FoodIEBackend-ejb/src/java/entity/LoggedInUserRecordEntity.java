@@ -2,14 +2,16 @@ package entity;
 
 import java.io.Serializable;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class LoggedInUserRecordEntity implements Serializable {
@@ -22,22 +24,23 @@ public class LoggedInUserRecordEntity implements Serializable {
     @Lob
     private String JWTToken;
     
-    @Column(nullable = false, length = 32)
-    @NotNull
-    @Size(max = 32)
-    private String email;
-    
     @Column
     private OffsetDateTime timestampDateTime;
+    
+    @ManyToOne
+    private ActorUserEntity actorUser;
+    @OneToMany(mappedBy = "loggedInUserRecordEntity")
+    private List<LoggedInUserRecordTransactionEntity> loggedInUserRecordTransactionEntities;
 
     public LoggedInUserRecordEntity() {
         timestampDateTime = OffsetDateTime.now();
+        this.loggedInUserRecordTransactionEntities = new ArrayList<>();
     }
 
-    public LoggedInUserRecordEntity(String JWTToken, String email) {
+    public LoggedInUserRecordEntity(String JWTToken, ActorUserEntity actorUserEntity) {
         this();
         this.JWTToken = JWTToken;
-        this.email = email;
+        this.actorUser = actorUserEntity;
     }
 
     public Long getLoggedInUserRecordEId() {
@@ -62,6 +65,22 @@ public class LoggedInUserRecordEntity implements Serializable {
 
     public void setTimestampDateTime(OffsetDateTime timestampDateTime) {
         this.timestampDateTime = timestampDateTime;
+    }
+
+    public List<LoggedInUserRecordTransactionEntity> getLoggedInUserRecordTransactionEntities() {
+        return loggedInUserRecordTransactionEntities;
+    }
+
+    public void setLoggedInUserRecordTransactionEntities(List<LoggedInUserRecordTransactionEntity> loggedInUserRecordTransactionEntities) {
+        this.loggedInUserRecordTransactionEntities = loggedInUserRecordTransactionEntities;
+    }
+
+    public ActorUserEntity getActorUser() {
+        return actorUser;
+    }
+
+    public void setActorUser(ActorUserEntity actorUser) {
+        this.actorUser = actorUser;
     }
     
     @Override
@@ -88,13 +107,4 @@ public class LoggedInUserRecordEntity implements Serializable {
     public String toString() {
         return "entity.LoggedInUserRecord[ id=" + loggedInUserRecordEId + " ]";
     }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    
 }

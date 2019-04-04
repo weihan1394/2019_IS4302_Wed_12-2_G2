@@ -1,0 +1,46 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #f2f7fb;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.signOutBtn {
+  font-weight: bold;
+  font-family: Poppins, sans-serif;
+}
+
+@media screen and (max-width: 959px) {
+  // .menuToolbar {
+  //   background-color: #25262c;
+  //   margin-bottom: 0px;
+  // }
+
+  .signOutBtn {
+    font-weight: normal;
+    font-family: Poppins, sans-serif;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+  }
+
+  .displayTitle {
+    font-size: 0.9em;
+  }
+}
