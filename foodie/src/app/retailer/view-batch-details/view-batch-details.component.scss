@@ -1,5 +1,5 @@
   .cardHeader {
-    color: #4495ff;
+    color: #3f51b5;
     text-align: center;
     padding-top: 20px;
     font-family: Poppins, sans-serif;
@@ -64,11 +64,11 @@
   
   @media screen and (max-width: 959px) {
     .cardHeader {
-      color: #4495ff;
+      color: #3f51b5;
       text-align: center;
       padding-top: 20px;
       font-family: Poppins, sans-serif;
-      font-size: 1.2em;
+      font-size: 1.3em;
       font-weight: bold;
     }
   
@@ -89,7 +89,7 @@
     }
 
     .labels {
-        padding-left:0px;
+        padding-left:20px;
     }
   
     #submitBtn {
