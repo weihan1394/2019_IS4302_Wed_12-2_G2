@@ -6,13 +6,5 @@
 		"pathRewrite": {
 			"^/api": ""
 		}
-	},
-	"/hyper" : {
-		"target": "http://localhost:3001/api/org.is4302foodie.Producer",
-		"secure": false,
-		"changeOrigin": true,
-		"pathRewrite": {
-			"^/hyper": ""
-		}
 	}
 }
