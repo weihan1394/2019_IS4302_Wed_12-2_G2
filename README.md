@@ -10,10 +10,10 @@ Team member: Hui Zhong, Yi Xuan, Wei Han
 ~~~
 Hyperledger
 - [✓] Setup hyperledger
-- [ ] Setup hyperledger API
-- [ ] Pull transaction chain
-- [ ] Setup scenario
-- [ ] Test script
+- [✓] Setup hyperledger API
+- [✓] Pull transaction chain
+- [✓] Setup scenario
+- [✓] Test script
 Frontend
 - [✓] Setup angular front-end
 - [ ] Review front-end (to use theme or Primefaces)
@@ -31,7 +31,9 @@ Backend
 
 ##  Special Note
 ### 1. Hyperledger
--
+- Import BNA file to hyper ledger playground. The file is in HyperLedger/is4302foodie-network.bna
+- The test data to create the particpate is in: HyperLedger/flowforHyperLedger.json
+- Once deploy can created the particpate we than can do the transactions following the json file that is provided.
 
 ### 2. AngularJs
 - 
