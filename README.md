@@ -4,8 +4,12 @@ IS4302 project: FOODIE
 
 Team member: Hui Zhong, Yi Xuan, Wei Han
 
-## Architecture Diagram
-![architecture.png](../master/myFolder/image.png)
+## Documentation
+#### Architecture Diagram
+![foodie_ArchitectureDiagram.png](https://github.com/weihan1394/FoodIE/blob/master/documentation/ArchitectureDiagram.png)
+
+#### Class Diagram
+![foodie_ClassDiagram.png](https://github.com/weihan1394/FoodIE/blob/master/documentation/databaseDiagram.png)
 
 ## Installation
 ### 1. Hyperledger
