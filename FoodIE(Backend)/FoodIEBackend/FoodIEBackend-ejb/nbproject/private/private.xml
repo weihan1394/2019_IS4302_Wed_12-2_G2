@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/Users/weihan1394/workspace/FoodIE/backend/FoodIEBackend/FoodIEBackend-ejb/src/java/util/inject/LookupController.java</file>
+            <file>file:/Users/weihan1394/workspace/FoodIE/backend/FoodIEBackend/FoodIEBackend-ejb/src/java/util/security/HashHelper.java</file>
+            <file>file:/Users/weihan1394/workspace/FoodIE/backend/FoodIEBackend/FoodIEBackend-ejb/src/java/ejb/session/stateless/CompanyEntityController.java</file>
+            <file>file:/Users/weihan1394/workspace/FoodIE/backend/FoodIEBackend/FoodIEBackend-ejb/src/java/entity/LoggedInUserRecordTransactionEntity.java</file>
+            <file>file:/Users/weihan1394/workspace/FoodIE/backend/FoodIEBackend/FoodIEBackend-ejb/src/java/ejb/session/stateless/LoggedInUserRecordEntityControllerLocal.java</file>
+            <file>file:/Users/weihan1394/workspace/FoodIE/backend/FoodIEBackend/FoodIEBackend-ejb/src/java/ejb/session/stateless/LoggedInUserRecordEntityController.java</file>
+            <file>file:/Users/weihan1394/workspace/FoodIE/backend/FoodIEBackend/FoodIEBackend-ejb/src/java/util/enumeration/Transaction.java</file>
+            <file>file:/Users/weihan1394/workspace/FoodIE/backend/FoodIEBackend/FoodIEBackend-ejb/src/java/ejb/session/singleton/DataInitializationSessionBean.java</file>
+            <file>file:/Users/weihan1394/workspace/FoodIE/backend/FoodIEBackend/FoodIEBackend-ejb/src/java/ejb/session/stateless/ActorUserControllerLocal.java</file>
+            <file>file:/Users/weihan1394/workspace/FoodIE/backend/FoodIEBackend/FoodIEBackend-ejb/src/java/ejb/session/stateless/ActorUserController.java</file>
+            <file>file:/Users/weihan1394/workspace/FoodIE/backend/FoodIEBackend/FoodIEBackend-ejb/src/java/ejb/session/stateless/LoggedInUserRecordTransactionEntityController.java</file>
+            <file>file:/Users/weihan1394/workspace/FoodIE/backend/FoodIEBackend/FoodIEBackend-ejb/src/java/entity/LoggedInUserRecordEntity.java</file>
+            <file>file:/Users/weihan1394/workspace/FoodIE/backend/FoodIEBackend/FoodIEBackend-ejb/src/java/ejb/session/stateless/LoggedInUserRecordTransactionEntityControllerLocal.java</file>
+        </group>
+    </open-files>
+</project-private>
