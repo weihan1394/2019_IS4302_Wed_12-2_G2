@@ -12,7 +12,7 @@ Food-IE is, thus, created to solve this issue. Not only will Food-ie track the v
 
 ## Installation
 ### 1. Hyperledger
-
+(hyperledger folder)
 - Import BNA file to hyper ledger playground (HyperLedger/is4302foodie-network.bna)
 https://github.com/weihan1394/FoodIE/blob/master/hyperledger/is4302foodie-network.bna
 - Testing data to create the particpate (HyperLedger/flowforHyperLedger.json)
@@ -32,12 +32,14 @@ https://github.com/weihan1394/FoodIE/blob/master/hyperledger/flowforHyperLedger.
 - npm run build image;
 
 ### 2. AngularJs
+(FoodIE_FrontEnd folder)
 - Use the command "npm install" to install the required packages
 - Edit "proxy-conf.json" file. Change the port number to the port number running on ExpressJs
 - To run with proxy: "npm start"
 - Go to localhost:4200
 
-### 3. JavaEE and Web Application
+### 3. JavaEE and Web Application 
+(FoodIE_Backend folder)
 - Setup with JWT security token
 - Setup Netbeans
 - Setup MySQL
@@ -76,6 +78,7 @@ This installation guide assumes that you are using Microsoft Windows.
 18. With version 8.x of the MySQL Connector/J driver, you will not be able to use the MySQL Server Node utility tool in NetBeans 8.2. In addition, you need to revise the database URL format to "jdbc:mysql://localhost:3306/<DATABASE_NAME>?zeroDateTimeBehavior=CONVERT_TO_NULL". Note that the "convertToNull" option is now "CONVERT_TO_NULL".
 
 ### 4. ExpressJS
+(FoodIE_APIServer folder)
 - Created certificate and key
 - Setup with proxy to connect to (3)
 - To run: node server.js 
