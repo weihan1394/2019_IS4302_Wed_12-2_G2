@@ -1,8 +1,10 @@
 # FoodIE
+Food-IE aims to solve the issue of food authenticity so that end users like customers will feel safe and assure of the vegetables they are eating and authorities are able to track the source of the problem. There are supply chain systems in the market that helps with food tracking. However, they lack transparency and immutability, and it is an issue for food authenticity. 
 
-IS4302 project: FOODIE
+Food-IE is, thus, created to solve this issue. Not only will Food-ie track the vegetables from its source to producer and all the way to the retailers, but Food-IE will also ensure that the information cannot be tampered with and that the information is transparent to end users, thus fulfilling food authenticity.
 
-Team member: Hui Zhong, Yi Xuan, Wei Han
+
+#### Team member
 - Chia Wei Han (A0156099R)
 - Lim Hui Zhong (A0161024X)
 - Soong Yi Xuan (A0155973R)
