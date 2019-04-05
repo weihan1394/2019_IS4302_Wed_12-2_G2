@@ -3,6 +3,9 @@
 IS4302 project: FOODIE
 
 Team member: Hui Zhong, Yi Xuan, Wei Han
+- Chia Wei Han (A0156099R)
+- Lim Hui Zhong (A0161024X)
+- Soong Yi Xuan (A0155973R)
 
 ## Documentation
 #### Architecture Diagram
