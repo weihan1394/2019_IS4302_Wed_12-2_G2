@@ -3,12 +3,6 @@ Food-IE aims to solve the issue of food authenticity so that end users like cust
 
 Food-IE is, thus, created to solve this issue. Not only will Food-ie track the vegetables from its source to producer and all the way to the retailers, but Food-IE will also ensure that the information cannot be tampered with and that the information is transparent to end users, thus fulfilling food authenticity.
 
-
-#### Team member
-- Chia Wei Han (A0156099R)
-- Lim Hui Zhong (A0161024X)
-- Soong Yi Xuan (A0155973R)
-
 ## Documentation
 #### Architecture Diagram
 ![foodie_ArchitectureDiagram.png](https://github.com/weihan1394/FoodIE/blob/master/documentation/ArchitectureDiagram.png)
@@ -106,7 +100,7 @@ No. | Category | Description | Version | Download
 - [https](https://localhost:8323/foodie/FoodIEBackend-war/ws/GenericResource/Login)
 
 
-### Task completion
+## Task completion
 ~~~
 Hyperledger
 - [✓] Setup hyperledger
@@ -129,6 +123,12 @@ Backend
 - [✓] Security
 ~~~
 - [Trello](https://trello.com/b/bnIMZ5vF/foodie)
+
+## Team Member
+- Chia Wei Han (A0156099R)
+- Lim Hui Zhong (A0161024X)
+- Soong Yi Xuan (A0155973R)
+
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
