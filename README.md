@@ -128,13 +128,10 @@ Backend
 - [Trello](https://trello.com/b/bnIMZ5vF/foodie)
 
 ## Team Member
-- Chia Wei Han (A0156099R)
-- Lim Hui Zhong (A0161024X)
-- Soong Yi Xuan (A0155973R)
+- Chia Wei Han
+- Lim Hui Zhong
+- Soong Yi Xuan
 
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
-
-## Edit
-[ReadME](https://www.makeareadme.com/)
